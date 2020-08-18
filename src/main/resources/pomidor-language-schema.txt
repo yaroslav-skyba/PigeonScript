@@ -1,0 +1,39 @@
+0) <pomidor-program> --> <pomidor-statement> <pomidor-program> | <empty>
+1) <pomidor-statement> --> <print> | <var-declaration> | <expression> | <label-declaration> | <goto> | <if-else-block>
+
+2) <literal> --> <bool-literal> | <int-literal> | <string-literal>
+
+3) <bool-literal> --> true | false
+4) <int-literal> --> - <numbers> | <numbers>
+5) <string-literal> --> " <any-symbols> "
+
+6) <any-symbols> --> <any-symbol> <any-symbols> | <empty>
+7) <any-symbol> --> any printable char
+
+8) <numbers> --> <number> <numbers> | <number>
+9) <number> --> 0 .. 9
+
+10) <var-declaration> --> var <var-name> = <expression>
+11) <var-name> --> <var-name-symbols>
+12) <var-name-symbols> --> <var-name-symbol> <var-name-symbols> | <var-name-symbol>
+13) <var-name-symbol> --> a...zA...Z_
+
+14) <label-declaration> --> label <label-name>
+15) <label-name> --> <var-name-symbols>
+
+16) <goto> --> goto <label-name>
+
+17) <expression> --> <expression-operand> <empty> | (<expression-operator> <expression>)
+
+18) <expression-operand> --> <literal> | <var-name>
+
+19) <expression-operator> --> <int-operator> | <bool-operator> | <string-operator>
+20) <int-operator> --> '+' | '-' | '*' | '/'
+21) <bool-operator> --> '&' | '|'
+22) <string-operator> --> '+'
+
+23) <if-else-block> --> if <expression> then <pomidor-statement> end | if <expression> then <pomidor-statement> else <pomidor-statement> end
+
+24) <print> --> print <expression>
+
+25) <operation> --> <var-name> = <expression>

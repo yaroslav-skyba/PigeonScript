@@ -1,0 +1,13 @@
+var int = 1
+print int
+if false then
+    int = 2
+    print int
+else
+    int = 3
+    print int
+end
+if true then
+    int = 4
+end
+print int
