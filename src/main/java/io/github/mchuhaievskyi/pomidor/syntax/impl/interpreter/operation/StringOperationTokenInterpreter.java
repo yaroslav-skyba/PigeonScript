@@ -35,13 +35,13 @@ public class StringOperationTokenInterpreter extends SpecificOperationTokenInter
     }
 
     @Override
-    public String[] getOperands(List<PomidorToken> subTokens, int operandsCount, int firstOperandPosition) {
+    public String[] getOperands(List<PomidorToken> subTokens, int operandsCount, int firstOperandIndex) {
 
         final String[] operands = new String[operandsCount];
 
         for (int i = 0; i < operandsCount; i++) {
 
-            operands[i] = subTokens.get(i * 2 + firstOperandPosition).getSourceCode();
+            operands[i] = subTokens.get(i * 2 + firstOperandIndex).getSourceCode();
             operands[i] = Objects.requireNonNullElse(variablesDatabase.getVariable(operands[i]), operands[i]).replace(QUOTE, EMPTY);
         }
 
@@ -49,7 +49,7 @@ public class StringOperationTokenInterpreter extends SpecificOperationTokenInter
     }
 
     @Override
-    public String calculateOperands(List<PomidorToken> subTokens, String[] operands, int firstOperationPosition) {
+    public String calculateOperands(List<PomidorToken> subTokens, String[] operands, int firstOperationIndex) {
 
         if (operands.length == 1) {
 

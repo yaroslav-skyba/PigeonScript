@@ -44,14 +44,14 @@ public class BoolOperationTokenInterpreter extends SpecificOperationTokenInterpr
     }
 
     @Override
-    public Boolean[] getOperands(List<PomidorToken> subTokens, int operandsCount, int firstOperandPosition) {
+    public Boolean[] getOperands(List<PomidorToken> subTokens, int operandsCount, int firstOperandIndex) {
 
         final String[] stringOperands = new String[operandsCount];
         final Boolean[] boolOperands = new Boolean[operandsCount];
 
         for (int i = 0; i < operandsCount; i++) {
 
-            stringOperands[i] = subTokens.get(i * 2 + firstOperandPosition).getSourceCode();
+            stringOperands[i] = subTokens.get(i * 2 + firstOperandIndex).getSourceCode();
             stringOperands[i] = Objects.requireNonNullElse(variablesDatabase.getVariable(stringOperands[i]), stringOperands[i]);
 
             if (stringOperands[i].equals("true")) {
@@ -72,23 +72,22 @@ public class BoolOperationTokenInterpreter extends SpecificOperationTokenInterpr
     }
 
     @Override
-    public Boolean calculateOperands(List<PomidorToken> subTokens, Boolean[] operands, int firstOperationPosition) {
+    public Boolean calculateOperands(List<PomidorToken> subTokens, Boolean[] operands, int firstOperationIndex) {
 
         final int operandsCount = operands.length;
+        boolean result = operands[0];
 
         if (operandsCount == 1) {
 
-            return operands[0];
+            return result;
         }
-
-        boolean result = operands[0];
         final int operandsOffset = 1;
 
         for (int i = 0; i < operandsCount - operandsOffset; i++) {
 
             final int operandsArrayIndex = i + operandsOffset;
 
-            switch (subTokens.get(i * 2 + firstOperationPosition).getSourceCode()) {
+            switch (subTokens.get(i * 2 + firstOperationIndex).getSourceCode()) {
 
                 case "&":
                     result &= operands[operandsArrayIndex];

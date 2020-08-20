@@ -20,6 +20,7 @@ public class PrintCommandSchema implements PomidorTokenSchema {
 
     @Override
     public String getDescription() {
+
         return "24) <print> --> print <expression>\n";
     }
 
@@ -31,6 +32,7 @@ public class PrintCommandSchema implements PomidorTokenSchema {
 
     @Override
     public PomidorTokenParser getTokenParser() {
+
         return printCommandTokenParser;
     }
 }

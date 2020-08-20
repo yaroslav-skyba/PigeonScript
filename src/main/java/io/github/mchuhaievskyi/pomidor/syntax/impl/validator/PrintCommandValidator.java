@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 public class PrintCommandValidator implements PomidorTokenValidator {
 
     private final PomidorTokenValidator printKeywordValidator;
-    private final PomidorTokenValidator operandValidator;
+    private final PomidorTokenValidator expressionValidator;
 
     @Autowired
     public PrintCommandValidator(PomidorTokenValidator printKeywordValidator,
-                                 PomidorTokenValidator operandValidator) {
+                                 PomidorTokenValidator expressionValidator) {
 
         this.printKeywordValidator = printKeywordValidator;
-        this.operandValidator = operandValidator;
+        this.expressionValidator = expressionValidator;
     }
 
     @Override
@@ -31,12 +31,25 @@ public class PrintCommandValidator implements PomidorTokenValidator {
             return false;
         }
 
-        return operandValidator.validate(sourceCodeTokens[1]);
+        final int sourceCodeTokensCount = sourceCodeTokens.length;
+        final int sourceCodeKeywordTokensCount = 1;
+        final int sourceCodeExpressionTokensCount = sourceCodeTokensCount - sourceCodeKeywordTokensCount;
+        final String[] sourceCodeExpressionTokens = new String[sourceCodeExpressionTokensCount];
+
+        System.arraycopy(sourceCodeTokens, 1, sourceCodeExpressionTokens, 0, sourceCodeExpressionTokensCount);
+
+        return expressionValidator.validate(sourceCodeExpressionTokens);
     }
 
     @Override
     public int getExpectedTokensCount() {
 
         return 2;
+    }
+
+    @Override
+    public boolean preValidate(String... sourceCodeTokens) {
+
+        return sourceCodeTokens != null && sourceCodeTokens.length % 2 == 0;
     }
 }

@@ -35,18 +35,18 @@ public class IfConditionValidator implements PomidorTokenValidator {
         }
 
         final int sourceCodeTokensCount = sourceCodeTokens.length;
-        final int keywordTokensCount = 2;
-        final int expressionTokensCount = sourceCodeTokensCount - keywordTokensCount;
-        final String[] expressionTokens = new String[expressionTokensCount];
+        final int sourceCodeKeywordTokensCount = 2;
+        final int sourceCodeExpressionTokensCount = sourceCodeTokensCount - sourceCodeKeywordTokensCount;
+        final String[] sourceCodeExpressionTokens = new String[sourceCodeExpressionTokensCount];
 
-        System.arraycopy(sourceCodeTokens, 1, expressionTokens, 0, expressionTokensCount);
+        System.arraycopy(sourceCodeTokens, 1, sourceCodeExpressionTokens, 0, sourceCodeExpressionTokensCount);
 
-        if (!boolExpressionValidator.validate(expressionTokens)) {
+        if (!boolExpressionValidator.validate(sourceCodeExpressionTokens)) {
 
             return false;
         }
 
-        return thenKeywordValidator.validate(sourceCodeTokens[sourceCodeTokensCount-1]);
+        return thenKeywordValidator.validate(sourceCodeTokens[sourceCodeTokensCount - 1]);
     }
 
     @Override

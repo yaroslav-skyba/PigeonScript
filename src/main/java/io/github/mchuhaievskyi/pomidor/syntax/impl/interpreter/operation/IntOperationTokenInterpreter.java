@@ -48,14 +48,14 @@ public class IntOperationTokenInterpreter extends SpecificOperationTokenInterpre
     }
 
     @Override
-    public Long[] getOperands(List<PomidorToken> subTokens, int operandsCount, int firstOperandPosition) {
+    public Long[] getOperands(List<PomidorToken> subTokens, int operandsCount, int firstOperandIndex) {
 
         final String[] stringOperands = new String[operandsCount];
         final Long[] intOperands = new Long[operandsCount];
 
         for (int i = 0; i < operandsCount; i++) {
 
-            stringOperands[i] = subTokens.get(i*2+firstOperandPosition).getSourceCode();
+            stringOperands[i] = subTokens.get(i*2+ firstOperandIndex).getSourceCode();
             stringOperands[i] = Objects.requireNonNullElse(variablesDatabase.getVariable(stringOperands[i]), stringOperands[i]);
             intOperands[i] = Long.parseLong(stringOperands[i]);
         }
@@ -64,7 +64,7 @@ public class IntOperationTokenInterpreter extends SpecificOperationTokenInterpre
     }
 
     @Override
-    public Long calculateOperands(List<PomidorToken> subTokens, Long[] operands, int firstOperationPosition) {
+    public Long calculateOperands(List<PomidorToken> subTokens, Long[] operands, int firstOperationIndex) {
 
         Long result = operands[0];
         final int operandsCount = operands.length;
@@ -80,7 +80,7 @@ public class IntOperationTokenInterpreter extends SpecificOperationTokenInterpre
 
             final int operandsArrayIndex = i + operandsOffset;
 
-            switch (subTokens.get(i * 2 + firstOperationPosition).getSourceCode()) {
+            switch (subTokens.get(i * 2 + firstOperationIndex).getSourceCode()) {
 
                 case "+":
                     result += operands[operandsArrayIndex];

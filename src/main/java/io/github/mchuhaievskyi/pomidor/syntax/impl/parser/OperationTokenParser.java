@@ -42,7 +42,7 @@ public class OperationTokenParser implements PomidorTokenParser {
         final int expressionSubTokensCount = subTokensCount - previousSubTokensCount;
         final String[] expressionSubTokens = new String[expressionSubTokensCount];
 
-        System.arraycopy(sourceCodeTokens, 2, expressionSubTokens, 0, expressionSubTokensCount);
+        System.arraycopy(sourceCodeTokens, previousSubTokensCount, expressionSubTokens, 0, expressionSubTokensCount);
 
         final PomidorToken expressionToken = expressionTokenParser.parse(expressionSubTokens);
         final List<PomidorToken> expressionSubTokensList = expressionToken.getSubTokens();

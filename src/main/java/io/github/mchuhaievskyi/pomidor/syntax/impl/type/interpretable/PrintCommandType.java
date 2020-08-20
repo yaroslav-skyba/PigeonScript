@@ -20,11 +20,13 @@ public class PrintCommandType implements InterpretableType {
 
     @Override
     public String getName() {
-        return "Print command token";
+
+        return "A print command token";
     }
 
     @Override
     public PomidorTokenSchema getSchema() {
+
         return printCommandSchema;
     }
 

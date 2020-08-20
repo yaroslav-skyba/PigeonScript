@@ -15,23 +15,39 @@ public class PrintCommandTokenParser implements PomidorTokenParser {
     @Autowired
     private PomidorTokenParser keywordTokenParser;
 
-    private final PomidorTokenParser operandTokenParser;
+    private final PomidorTokenParser expressionTokenParser;
 
     @Autowired
-    public PrintCommandTokenParser(PomidorTokenParser operandTokenParser) {
+    public PrintCommandTokenParser(PomidorTokenParser expressionTokenParser) {
 
-        this.operandTokenParser = operandTokenParser;
+        this.expressionTokenParser = expressionTokenParser;
     }
 
     @Override
     public PomidorToken parse(String... sourceCodeTokens) {
 
+        final List<PomidorToken> sourceCodeSubTokens = new ArrayList<>();
+
+        sourceCodeSubTokens.add(keywordTokenParser.parse(sourceCodeTokens[0]));
+
+        final int sourceCodeSubTokensCount = sourceCodeTokens.length;
+        final int previousSourceCodeSubTokensCount = 1;
+        final int sourceCodeExpressionSubTokensCount = sourceCodeSubTokensCount - previousSourceCodeSubTokensCount;
+        final String[] sourceCodeExpressionSubTokens = new String[sourceCodeExpressionSubTokensCount];
+
+        System.arraycopy(sourceCodeTokens,
+                         previousSourceCodeSubTokensCount,
+                         sourceCodeExpressionSubTokens,
+                        0,
+                         sourceCodeExpressionSubTokensCount);
+
+        final PomidorToken sourceCodeExpressionToken = expressionTokenParser.parse(sourceCodeExpressionSubTokens);
+        final List<PomidorToken> sourceCodeExpressionSubTokensList = sourceCodeExpressionToken.getSubTokens();
+
+        sourceCodeSubTokens.addAll(sourceCodeExpressionSubTokensList);
+
         final String sourceCodeLine = String.join(" ", sourceCodeTokens);
-        final List<PomidorToken> subTokens = new ArrayList<>();
 
-        subTokens.add(keywordTokenParser.parse(sourceCodeTokens[0]));
-        subTokens.add(operandTokenParser.parse(sourceCodeTokens[1]));
-
-        return new PomidorTokenImpl(printCommandType, sourceCodeLine, subTokens);
+        return new PomidorTokenImpl(printCommandType, sourceCodeLine, sourceCodeSubTokens);
     }
 }

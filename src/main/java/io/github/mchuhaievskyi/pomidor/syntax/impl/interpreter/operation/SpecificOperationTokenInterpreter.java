@@ -8,8 +8,8 @@ import java.util.List;
 
 public abstract class SpecificOperationTokenInterpreter<T> extends PomidorTokenInterpreter {
 
-    public abstract T[] getOperands(List<PomidorToken> subTokens, int operandsCount, int firstOperandPosition);
-    public abstract T calculateOperands(List<PomidorToken> subTokens, T[] operands, int firstOperationPosition);
+    public abstract T[] getOperands(List<PomidorToken> subTokens, int operandsCount, int firstOperandIndex);
+    public abstract T calculateOperands(List<PomidorToken> subTokens, T[] operands, int firstOperationIndex);
 
     @Override
     public boolean interpret(PomidorToken token) {
