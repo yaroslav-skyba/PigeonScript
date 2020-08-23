@@ -4,5 +4,5 @@ import io.github.mchuhaievskyi.pomidor.syntax.PomidorToken;
 
 public interface PomidorTokenParser {
 
-    PomidorToken parse(String... sourceCodeTokens);
+    PomidorToken parse(String... tokens);
 }

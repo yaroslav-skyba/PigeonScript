@@ -1,4 +1,4 @@
-package io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.operation;
+package io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.declaration;
 
 import io.github.mchuhaievskyi.pomidor.database.PomidorVariablesDatabase;
 import io.github.mchuhaievskyi.pomidor.database.PomidorVariablesDatabaseImpl;
@@ -9,13 +9,13 @@ import io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.expression.Specif
 import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenInterpreter;
 import java.util.List;
 
-public abstract class SpecificOperationTokenInterpreter<T> extends PomidorTokenInterpreter {
+public abstract class SpecificVarDeclarationTokenInterpreter<T> extends PomidorTokenInterpreter {
 
     final PomidorVariablesDatabase variablesDatabase = PomidorVariablesDatabaseImpl.getInstance();
 
     private final SpecificExpressionTokenInterpreter<T> specificExpressionTokenInterpreter;
 
-    protected SpecificOperationTokenInterpreter(SpecificExpressionTokenInterpreter<T> specificExpressionTokenInterpreter) {
+    public SpecificVarDeclarationTokenInterpreter(SpecificExpressionTokenInterpreter<T> specificExpressionTokenInterpreter) {
 
         this.specificExpressionTokenInterpreter = specificExpressionTokenInterpreter;
     }
@@ -24,15 +24,15 @@ public abstract class SpecificOperationTokenInterpreter<T> extends PomidorTokenI
     public boolean interpret(PomidorToken token) {
 
         final List<PomidorToken> subTokens = token.getSubTokens();
-        final String assignableVarName = subTokens.get(0).getSourceCode();
+        final String assignableVarName = subTokens.get(1).getSourceCode();
         String assignableVarValue = variablesDatabase.getVariable(assignableVarName);
 
-        if (assignableVarValue == null) {
+        if (assignableVarValue != null) {
 
             return false;
         }
 
-        final List<PomidorToken> expressionTokens = subTokens.subList(2, subTokens.size());
+        final List<PomidorToken> expressionTokens = subTokens.subList(3, subTokens.size());
         final String[] expressionSourceCodeLines = new String[expressionTokens.size()];
 
         for (int i = 0; i < expressionSourceCodeLines.length; i++) {

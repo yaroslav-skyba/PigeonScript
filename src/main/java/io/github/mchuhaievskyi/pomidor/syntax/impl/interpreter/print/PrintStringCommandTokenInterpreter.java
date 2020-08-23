@@ -1,6 +1,6 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.print;
 
-import io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.operation.SpecificOperationTokenInterpreter;
+import io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.expression.SpecificExpressionTokenInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 public class PrintStringCommandTokenInterpreter extends SpecificPrintCommandTokenInterpreter<String> {
 
     @Autowired
-    public PrintStringCommandTokenInterpreter(SpecificOperationTokenInterpreter<String> stringOperationTokenInterpreter) {
+    public PrintStringCommandTokenInterpreter(SpecificExpressionTokenInterpreter<String> stringExpressionTokenInterpreter) {
 
-        super(stringOperationTokenInterpreter);
+        super(stringExpressionTokenInterpreter);
     }
 
     @Override

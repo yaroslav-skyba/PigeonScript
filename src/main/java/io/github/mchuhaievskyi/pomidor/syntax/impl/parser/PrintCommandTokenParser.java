@@ -24,18 +24,18 @@ public class PrintCommandTokenParser implements PomidorTokenParser {
     }
 
     @Override
-    public PomidorToken parse(String... sourceCodeTokens) {
+    public PomidorToken parse(String... tokens) {
 
         final List<PomidorToken> sourceCodeSubTokens = new ArrayList<>();
 
-        sourceCodeSubTokens.add(keywordTokenParser.parse(sourceCodeTokens[0]));
+        sourceCodeSubTokens.add(keywordTokenParser.parse(tokens[0]));
 
-        final int sourceCodeSubTokensCount = sourceCodeTokens.length;
+        final int sourceCodeSubTokensCount = tokens.length;
         final int previousSourceCodeSubTokensCount = 1;
         final int sourceCodeExpressionSubTokensCount = sourceCodeSubTokensCount - previousSourceCodeSubTokensCount;
         final String[] sourceCodeExpressionSubTokens = new String[sourceCodeExpressionSubTokensCount];
 
-        System.arraycopy(sourceCodeTokens,
+        System.arraycopy(tokens,
                          previousSourceCodeSubTokensCount,
                          sourceCodeExpressionSubTokens,
                         0,
@@ -46,7 +46,7 @@ public class PrintCommandTokenParser implements PomidorTokenParser {
 
         sourceCodeSubTokens.addAll(sourceCodeExpressionSubTokensList);
 
-        final String sourceCodeLine = String.join(" ", sourceCodeTokens);
+        final String sourceCodeLine = String.join(" ", tokens);
 
         return new PomidorTokenImpl(printCommandType, sourceCodeLine, sourceCodeSubTokens);
     }

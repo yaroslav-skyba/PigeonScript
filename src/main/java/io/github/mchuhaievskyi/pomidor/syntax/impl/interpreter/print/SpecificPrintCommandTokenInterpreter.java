@@ -1,39 +1,43 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.print;
 
+import io.github.mchuhaievskyi.pomidor.syntax.PomidorParser;
 import io.github.mchuhaievskyi.pomidor.syntax.PomidorToken;
-import io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.operation.SpecificOperationTokenInterpreter;
+import io.github.mchuhaievskyi.pomidor.syntax.impl.PomidorParserImpl;
+import io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.expression.SpecificExpressionTokenInterpreter;
 import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenInterpreter;
 import java.util.List;
 
 public abstract class SpecificPrintCommandTokenInterpreter<T> extends PomidorTokenInterpreter {
 
-    private final SpecificOperationTokenInterpreter<T> specificOperationTokenInterpreter;
+    private final SpecificExpressionTokenInterpreter<T> specificExpressionTokenInterpreter;
 
-    public SpecificPrintCommandTokenInterpreter(SpecificOperationTokenInterpreter<T> specificOperationTokenInterpreter) {
+    public SpecificPrintCommandTokenInterpreter(SpecificExpressionTokenInterpreter<T> specificExpressionTokenInterpreter) {
 
-        this.specificOperationTokenInterpreter = specificOperationTokenInterpreter;
+        this.specificExpressionTokenInterpreter = specificExpressionTokenInterpreter;
     }
 
     @Override
     public boolean interpret(PomidorToken token) {
 
         final List<PomidorToken> subTokens = token.getSubTokens();
-        final int tokenOperandsCount = subTokens.size() / 2;
-        final T[] tokenOperands;
-        final int firstTokenOperationIndex = 2;
-        final T result;
+        final List<PomidorToken> expressionTokens = subTokens.subList(1, subTokens.size());
+        final String[] expressionSourceCodeLines = new String[expressionTokens.size()];
 
-        try {
+        for (int i = 0; i < expressionSourceCodeLines.length; i++) {
 
-            tokenOperands = specificOperationTokenInterpreter.getOperands(subTokens, tokenOperandsCount, 1);
-            result = specificOperationTokenInterpreter.calculateOperands(subTokens, tokenOperands, firstTokenOperationIndex);
+            expressionSourceCodeLines[i] = expressionTokens.get(i).getSourceCode();
+        }
 
-        } catch (RuntimeException e) {
+        final String expressionSourceCodeLine = String.join(" ", expressionSourceCodeLines);
+        final PomidorParser expressionParser = new PomidorParserImpl(expressionSourceCodeLine, token.getType());
+        final PomidorToken expressionToken = expressionParser.takeNextToken();
+
+        if (!specificExpressionTokenInterpreter.interpret(expressionToken)) {
 
             return false;
         }
 
-        printInterpretationResult(result);
+        printInterpretationResult(specificExpressionTokenInterpreter.getExpressionResult(expressionToken));
 
         return true;
     }

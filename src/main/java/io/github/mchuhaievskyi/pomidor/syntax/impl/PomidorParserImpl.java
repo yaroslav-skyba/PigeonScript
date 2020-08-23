@@ -4,7 +4,6 @@ import io.github.mchuhaievskyi.pomidor.syntax.PomidorParser;
 import io.github.mchuhaievskyi.pomidor.syntax.PomidorToken;
 import io.github.mchuhaievskyi.pomidor.syntax.token.*;
 import java.util.*;
-import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

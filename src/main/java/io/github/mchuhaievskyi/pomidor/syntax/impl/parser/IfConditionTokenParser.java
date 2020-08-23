@@ -27,27 +27,24 @@ public class IfConditionTokenParser implements PomidorTokenParser {
     }
 
     @Override
-    public PomidorToken parse(String... sourceCodeTokens) {
+    public PomidorToken parse(String... tokens) {
 
-        final List<PomidorToken> subTokens = new ArrayList<>();
+        final List<PomidorToken> ifConditionTokens = new ArrayList<>();
+        ifConditionTokens.add(keywordTokenParser.parse(tokens[0]));
 
-        subTokens.add(keywordTokenParser.parse(sourceCodeTokens[0]));
+        final int tokensCount = tokens.length;
+        final int expressionTokensCount = tokensCount - 2;
+        final String[] expressionTokens = new String[expressionTokensCount];
 
-        final int subTokensCount = sourceCodeTokens.length;
-        final int keywordSubTokensCount = 2;
-        final int expressionSubTokensCount = subTokensCount - keywordSubTokensCount;
-        final String[] expressionSubTokens = new String[expressionSubTokensCount];
+        final int expressionTokensOffset = 1;
+        System.arraycopy(tokens, expressionTokensOffset, expressionTokens, 0, expressionTokensCount);
 
-        System.arraycopy(sourceCodeTokens, 1, expressionSubTokens, 0, expressionSubTokensCount);
+        final List<PomidorToken> parsedExpressionTokens = expressionTokenParser.parse(expressionTokens).getSubTokens();
+        ifConditionTokens.addAll(parsedExpressionTokens);
+        ifConditionTokens.add(keywordTokenParser.parse(tokens[tokensCount - expressionTokensOffset]));
 
-        final PomidorToken expressionToken = expressionTokenParser.parse(expressionSubTokens);
-        final List<PomidorToken> expressionSubTokensList = expressionToken.getSubTokens();
+        final String sourceCodeLine = String.join(" ", tokens);
 
-        subTokens.addAll(expressionSubTokensList);
-        subTokens.add(keywordTokenParser.parse(sourceCodeTokens[subTokensCount-1]));
-
-        final String sourceCodeLine = String.join(" ", sourceCodeTokens);
-
-        return new PomidorTokenImpl(ifConditionType, sourceCodeLine, subTokens);
+        return new PomidorTokenImpl(ifConditionType, sourceCodeLine, ifConditionTokens);
     }
 }

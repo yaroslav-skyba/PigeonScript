@@ -27,18 +27,18 @@ public class ExpressionTokenParser implements PomidorTokenParser {
     }
 
     @Override
-    public PomidorToken parse(String... sourceCodeTokens) {
+    public PomidorToken parse(String... tokens) {
 
-        final int sourceCodeTokensLength = sourceCodeTokens.length;
-        final String sourceCodeLine = String.join(" ", sourceCodeTokens);
+        final int sourceCodeTokensLength = tokens.length;
+        final String sourceCodeLine = String.join(" ", tokens);
         final List<PomidorToken> subTokens = new ArrayList<>();
 
-        subTokens.add(operandTokenParser.parse(sourceCodeTokens[0]));
+        subTokens.add(operandTokenParser.parse(tokens[0]));
 
         for (int i = 1; i < sourceCodeTokensLength; i += 2) {
 
-            subTokens.add(operatorTokenParser.parse(sourceCodeTokens[i]));
-            subTokens.add(operandTokenParser.parse(sourceCodeTokens[i+1]));
+            subTokens.add(operatorTokenParser.parse(tokens[i]));
+            subTokens.add(operandTokenParser.parse(tokens[i+1]));
         }
 
         return new PomidorTokenImpl(expressionType, sourceCodeLine, subTokens);

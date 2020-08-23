@@ -1,6 +1,6 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.print;
 
-import io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.operation.SpecificOperationTokenInterpreter;
+import io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.expression.SpecificExpressionTokenInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 public class PrintBoolCommandTokenInterpreter extends SpecificPrintCommandTokenInterpreter<Boolean> {
 
     @Autowired
-    public PrintBoolCommandTokenInterpreter(SpecificOperationTokenInterpreter<Boolean> boolOperationTokenInterpreter) {
+    public PrintBoolCommandTokenInterpreter(SpecificExpressionTokenInterpreter<Boolean> boolExpressionTokenInterpreter) {
 
-        super(boolOperationTokenInterpreter);
+        super(boolExpressionTokenInterpreter);
     }
 }

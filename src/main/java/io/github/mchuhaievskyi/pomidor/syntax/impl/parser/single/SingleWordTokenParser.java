@@ -10,9 +10,9 @@ public abstract class SingleWordTokenParser implements PomidorTokenParser {
     private PomidorTokenType tokenType;
 
     @Override
-    public PomidorToken parse(String... sourceCodeTokens) {
+    public PomidorToken parse(String... tokens) {
 
-        return new PomidorTokenImpl(getTokenType(), sourceCodeTokens[0]);
+        return new PomidorTokenImpl(getTokenType(), tokens[0]);
     }
 
     public PomidorTokenType getTokenType() {

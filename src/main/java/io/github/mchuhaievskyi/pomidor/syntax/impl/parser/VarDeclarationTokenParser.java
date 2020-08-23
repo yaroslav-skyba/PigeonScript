@@ -18,20 +18,20 @@ public class VarDeclarationTokenParser implements PomidorTokenParser {
     @Autowired
     private PomidorTokenType operatorType;
     @Autowired
-    private PomidorTokenType literalType;
+    private PomidorTokenType expressionType;
     @Autowired
     private PomidorTokenType varDeclarationType;
 
     @Override
-    public PomidorToken parse(String... sourceCodeTokens) {
+    public PomidorToken parse(String... tokens) {
 
-        final String sourceCodeLine = String.join(" ", sourceCodeTokens);
+        final String sourceCodeLine = String.join(" ", tokens);
         final List<PomidorToken> subTokens = new ArrayList<>();
 
-        subTokens.add(keywordType.getSchema().getTokenParser().parse(sourceCodeTokens[0]));
-        subTokens.add(varNameType.getSchema().getTokenParser().parse(sourceCodeTokens[1]));
-        subTokens.add(operatorType.getSchema().getTokenParser().parse(sourceCodeTokens[2]));
-        subTokens.add(literalType.getSchema().getTokenParser().parse(sourceCodeTokens[3]));
+        subTokens.add(keywordType.getSchema().getTokenParser().parse(tokens[0]));
+        subTokens.add(varNameType.getSchema().getTokenParser().parse(tokens[1]));
+        subTokens.add(operatorType.getSchema().getTokenParser().parse(tokens[2]));
+        subTokens.add(expressionType.getSchema().getTokenParser().parse(tokens[3]));
 
         return new PomidorTokenImpl(varDeclarationType, sourceCodeLine, subTokens);
     }

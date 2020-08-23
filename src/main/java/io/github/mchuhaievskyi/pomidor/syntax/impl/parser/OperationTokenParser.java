@@ -30,26 +30,26 @@ public class OperationTokenParser implements PomidorTokenParser {
     }
 
     @Override
-    public PomidorToken parse(String... sourceCodeTokens) {
+    public PomidorToken parse(String... tokens) {
 
         final List<PomidorToken> subTokens = new ArrayList<>();
 
-        subTokens.add(operandTokenParser.parse(sourceCodeTokens[0]));
-        subTokens.add(operatorTokenParser.parse(sourceCodeTokens[1]));
+        subTokens.add(operandTokenParser.parse(tokens[0]));
+        subTokens.add(operatorTokenParser.parse(tokens[1]));
 
-        final int subTokensCount = sourceCodeTokens.length;
+        final int subTokensCount = tokens.length;
         final int previousSubTokensCount = 2;
         final int expressionSubTokensCount = subTokensCount - previousSubTokensCount;
         final String[] expressionSubTokens = new String[expressionSubTokensCount];
 
-        System.arraycopy(sourceCodeTokens, previousSubTokensCount, expressionSubTokens, 0, expressionSubTokensCount);
+        System.arraycopy(tokens, previousSubTokensCount, expressionSubTokens, 0, expressionSubTokensCount);
 
         final PomidorToken expressionToken = expressionTokenParser.parse(expressionSubTokens);
         final List<PomidorToken> expressionSubTokensList = expressionToken.getSubTokens();
 
         subTokens.addAll(expressionSubTokensList);
 
-        final String sourceCodeLine = String.join(" ", sourceCodeTokens);
+        final String sourceCodeLine = String.join(" ", tokens);
 
         return new PomidorTokenImpl(operationType, sourceCodeLine, subTokens);
     }
