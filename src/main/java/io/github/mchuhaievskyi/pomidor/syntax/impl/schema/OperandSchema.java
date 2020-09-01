@@ -5,17 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OperandSchema implements PomidorTokenSchema {
+public class OperandSchema implements TokenSchema {
 
-    private final PomidorTokenValidator operandValidator;
-    private final PomidorTokenParser operandTokenParser;
+    private final TokenValidator operandValidator;
+    private final TokenParser operandParser;
 
     @Autowired
-    public OperandSchema(PomidorTokenValidator operandValidator,
-                         PomidorTokenParser operandTokenParser) {
+    public OperandSchema(TokenValidator operandValidator, TokenParser operandParser) {
 
         this.operandValidator = operandValidator;
-        this.operandTokenParser = operandTokenParser;
+        this.operandParser = operandParser;
     }
 
     @Override
@@ -24,12 +23,12 @@ public class OperandSchema implements PomidorTokenSchema {
     }
 
     @Override
-    public PomidorTokenValidator getTokenValidator() {
+    public TokenValidator getTokenValidator() {
         return operandValidator;
     }
 
     @Override
-    public PomidorTokenParser getTokenParser() {
-        return operandTokenParser;
+    public TokenParser getTokenParser() {
+        return operandParser;
     }
 }

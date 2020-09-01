@@ -1,20 +1,18 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.validator.operation;
 
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenValidator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import io.github.mchuhaievskyi.pomidor.syntax.impl.validator.expression.SpecificExpressionValidator;
+import io.github.mchuhaievskyi.pomidor.syntax.impl.validator.operand.SpecificOperandValidator;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenValidator;
 
-@Component
-public abstract class SpecificOperationValidator<T> implements PomidorTokenValidator {
+public abstract class SpecificOperationValidator<T> implements TokenValidator {
 
-    private final PomidorTokenValidator operandValidator;
-    private final PomidorTokenValidator assigmentOperatorValidator;
-    private final PomidorTokenValidator expressionValidator;
+    private final SpecificOperandValidator<T> operandValidator;
+    private final TokenValidator assigmentOperatorValidator;
+    private final SpecificExpressionValidator<T> expressionValidator;
 
-    @Autowired
-    public SpecificOperationValidator(PomidorTokenValidator operandValidator,
-                                      PomidorTokenValidator assigmentOperatorValidator,
-                                      PomidorTokenValidator expressionValidator) {
+    public SpecificOperationValidator(SpecificOperandValidator<T> operandValidator,
+                                      TokenValidator assigmentOperatorValidator,
+                                      SpecificExpressionValidator<T> expressionValidator) {
 
         this.operandValidator = operandValidator;
         this.assigmentOperatorValidator = assigmentOperatorValidator;
@@ -39,9 +37,8 @@ public abstract class SpecificOperationValidator<T> implements PomidorTokenValid
             return false;
         }
 
-        final int sourceCodeTokensCount = sourceCodeTokens.length;
-        final int previousTokensCount = 2;
-        final int expressionTokensCount = sourceCodeTokensCount - previousTokensCount;
+        final int notExpressionTokensCount = 2;
+        final int expressionTokensCount = sourceCodeTokens.length - notExpressionTokensCount;
         final String[] expressionTokens = new String[expressionTokensCount];
 
         System.arraycopy(sourceCodeTokens, 2, expressionTokens, 0, expressionTokensCount);
@@ -60,6 +57,4 @@ public abstract class SpecificOperationValidator<T> implements PomidorTokenValid
 
         return 3;
     }
-
-    public abstract Class<T> getType();
 }

@@ -1,15 +1,15 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.type;
 
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenSchema;
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenType;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenSchema;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class KeywordType implements PomidorTokenType {
+public class KeywordType implements TokenType {
 
     @Autowired
-    private PomidorTokenSchema keywordSchema;
+    private TokenSchema keywordSchema;
 
     @Override
     public String getName() {
@@ -17,7 +17,7 @@ public class KeywordType implements PomidorTokenType {
     }
 
     @Override
-    public PomidorTokenSchema getSchema() {
+    public TokenSchema getSchema() {
         return keywordSchema;
     }
 }

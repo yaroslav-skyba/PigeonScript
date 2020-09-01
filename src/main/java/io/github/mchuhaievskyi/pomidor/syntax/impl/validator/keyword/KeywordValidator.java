@@ -1,13 +1,13 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.validator.keyword;
 
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenValidator;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
 @Component
-public class KeywordValidator implements PomidorTokenValidator {
+public class KeywordValidator implements TokenValidator {
 
     private final Set<SpecificKeywordValidator> specificKeywordValidators;
 

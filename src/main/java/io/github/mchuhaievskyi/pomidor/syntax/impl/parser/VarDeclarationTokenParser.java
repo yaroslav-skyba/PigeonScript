@@ -1,7 +1,7 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.parser;
 
-import io.github.mchuhaievskyi.pomidor.syntax.PomidorToken;
-import io.github.mchuhaievskyi.pomidor.syntax.impl.PomidorTokenImpl;
+import io.github.mchuhaievskyi.pomidor.syntax.Token;
+import io.github.mchuhaievskyi.pomidor.syntax.impl.TokenImpl;
 import io.github.mchuhaievskyi.pomidor.syntax.token.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,30 +9,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class VarDeclarationTokenParser implements PomidorTokenParser {
+public class VarDeclarationTokenParser implements TokenParser {
 
     @Autowired
-    private PomidorTokenType keywordType;
+    private TokenType keywordType;
     @Autowired
-    private PomidorTokenType varNameType;
+    private TokenType varNameType;
     @Autowired
-    private PomidorTokenType operatorType;
+    private TokenType operatorType;
     @Autowired
-    private PomidorTokenType expressionType;
+    private TokenType expressionType;
     @Autowired
-    private PomidorTokenType varDeclarationType;
+    private TokenType varDeclarationType;
 
     @Override
-    public PomidorToken parse(String... tokens) {
+    public Token parse(String... sourceCodeTokens) {
 
-        final String sourceCodeLine = String.join(" ", tokens);
-        final List<PomidorToken> subTokens = new ArrayList<>();
+        final List<Token> tokensList = new ArrayList<>();
 
-        subTokens.add(keywordType.getSchema().getTokenParser().parse(tokens[0]));
-        subTokens.add(varNameType.getSchema().getTokenParser().parse(tokens[1]));
-        subTokens.add(operatorType.getSchema().getTokenParser().parse(tokens[2]));
-        subTokens.add(expressionType.getSchema().getTokenParser().parse(tokens[3]));
+        tokensList.add(keywordType.getSchema().getTokenParser().parse(sourceCodeTokens[0]));
+        tokensList.add(varNameType.getSchema().getTokenParser().parse(sourceCodeTokens[1]));
+        tokensList.add(operatorType.getSchema().getTokenParser().parse(sourceCodeTokens[2]));
 
-        return new PomidorTokenImpl(varDeclarationType, sourceCodeLine, subTokens);
+        final int notExpressionTokensCount = 3;
+        final int expressionTokensCount = sourceCodeTokens.length - notExpressionTokensCount;
+        final String[] expressionTokens = new String[expressionTokensCount];
+
+        System.arraycopy(sourceCodeTokens, notExpressionTokensCount, expressionTokens, 0, expressionTokensCount);
+
+        tokensList.addAll(expressionType.getSchema().getTokenParser().parse(expressionTokens).getSubTokens());
+
+        return new TokenImpl(varDeclarationType, String.join(" ", sourceCodeTokens), tokensList);
     }
 }

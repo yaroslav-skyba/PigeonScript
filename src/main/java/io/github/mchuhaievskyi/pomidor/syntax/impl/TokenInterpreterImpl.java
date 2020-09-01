@@ -1,8 +1,7 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl;
 
-import io.github.mchuhaievskyi.pomidor.syntax.PomidorParser;
-import io.github.mchuhaievskyi.pomidor.syntax.PomidorToken;
-import io.github.mchuhaievskyi.pomidor.syntax.TokenInterpreter;
+import io.github.mchuhaievskyi.pomidor.syntax.TokenParser;
+import io.github.mchuhaievskyi.pomidor.syntax.Token;
 import io.github.mchuhaievskyi.pomidor.syntax.impl.type.interpretable.InterpretableType;
 import io.github.mchuhaievskyi.pomidor.syntax.token.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component
-public class TokenInterpreterImpl implements TokenInterpreter {
+public class TokenInterpreterImpl implements io.github.mchuhaievskyi.pomidor.syntax.TokenInterpreter {
 
     private final Set<InterpretableType> interpretableTypes;
 
@@ -26,27 +25,27 @@ public class TokenInterpreterImpl implements TokenInterpreter {
 
         for (final InterpretableType interpretableType : interpretableTypes) {
 
-            final PomidorTokenType tokenBean = context.getBean(interpretableType.getClass());
-            final PomidorParser parser = new PomidorParserImpl(fileLine, tokenBean);
-            final PomidorToken token;
+            final TokenType tokenBean = context.getBean(interpretableType.getClass());
+            final TokenParser tokenParser = new TokenParserImpl(fileLine, tokenBean);
+            final Token token;
 
             try {
 
-                token = parser.takeNextToken();
+                token = tokenParser.takeNextToken();
 
             } catch (IllegalStateException e) {
 
                 continue;
             }
 
-            final PomidorTokenInterpreter tokenInterpreter = interpretableType.getInterpreter();
+            final TokenInterpreter interpreter = interpretableType.getInterpreter();
 
-            if (!tokenInterpreter.isNotInterpretationBlocked()) {
+            if (!interpreter.isNotInterpretationBlocked()) {
 
                 return true;
             }
 
-            return tokenInterpreter.interpret(token);
+            return interpreter.interpret(token);
         }
 
         return false;

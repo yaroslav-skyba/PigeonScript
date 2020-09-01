@@ -1,23 +1,21 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.validator;
 
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenValidator;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class IfConditionValidator implements PomidorTokenValidator {
+public class IfConditionValidator implements TokenValidator {
 
-    private final PomidorTokenValidator ifKeywordValidator;
-    private final PomidorTokenValidator boolExpressionValidator;
-    private final PomidorTokenValidator thenKeywordValidator;
+    private final TokenValidator ifKeywordValidator;
+    private final TokenValidator expressionValidator;
+    private final TokenValidator thenKeywordValidator;
 
     @Autowired
-    public IfConditionValidator(PomidorTokenValidator ifKeywordValidator,
-                                PomidorTokenValidator boolExpressionValidator,
-                                PomidorTokenValidator thenKeywordValidator) {
+    public IfConditionValidator(TokenValidator ifKeywordValidator, TokenValidator expressionValidator, TokenValidator thenKeywordValidator) {
 
         this.ifKeywordValidator = ifKeywordValidator;
-        this.boolExpressionValidator = boolExpressionValidator;
+        this.expressionValidator = expressionValidator;
         this.thenKeywordValidator = thenKeywordValidator;
     }
 
@@ -34,19 +32,20 @@ public class IfConditionValidator implements PomidorTokenValidator {
             return false;
         }
 
-        final int sourceCodeTokensCount = sourceCodeTokens.length;
-        final int sourceCodeKeywordTokensCount = 2;
-        final int sourceCodeExpressionTokensCount = sourceCodeTokensCount - sourceCodeKeywordTokensCount;
-        final String[] sourceCodeExpressionTokens = new String[sourceCodeExpressionTokensCount];
+        final int tokensCount = sourceCodeTokens.length;
+        final int expressionTokensCount = tokensCount - 2;
+        final String[] expressionTokens = new String[expressionTokensCount];
 
-        System.arraycopy(sourceCodeTokens, 1, sourceCodeExpressionTokens, 0, sourceCodeExpressionTokensCount);
+        final int tokensArrayCopySrcPos = 1;
 
-        if (!boolExpressionValidator.validate(sourceCodeExpressionTokens)) {
+        System.arraycopy(sourceCodeTokens, tokensArrayCopySrcPos, expressionTokens, 0, expressionTokensCount);
+
+        if (!expressionValidator.validate(expressionTokens)) {
 
             return false;
         }
 
-        return thenKeywordValidator.validate(sourceCodeTokens[sourceCodeTokensCount - 1]);
+        return thenKeywordValidator.validate(sourceCodeTokens[tokensCount - 1]);
     }
 
     @Override

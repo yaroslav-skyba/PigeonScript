@@ -1,18 +1,18 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.validator.operand;
 
-import io.github.mchuhaievskyi.pomidor.database.PomidorVariablesDatabase;
-import io.github.mchuhaievskyi.pomidor.database.PomidorVariablesDatabaseImpl;
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenValidator;
+import io.github.mchuhaievskyi.pomidor.database.VariablesDatabase;
+import io.github.mchuhaievskyi.pomidor.database.VariablesDatabaseImpl;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class StringOperandValidator implements SpecificOperandValidator<String> {
 
-    private final PomidorTokenValidator stringLiteralValidator;
+    private final TokenValidator stringLiteralValidator;
 
     @Autowired
-    public StringOperandValidator(PomidorTokenValidator stringLiteralValidator) {
+    public StringOperandValidator(TokenValidator stringLiteralValidator) {
 
         this.stringLiteralValidator = stringLiteralValidator;
     }
@@ -31,7 +31,7 @@ public class StringOperandValidator implements SpecificOperandValidator<String> 
             return false;
         }
 
-        PomidorVariablesDatabase variablesDatabase = PomidorVariablesDatabaseImpl.getInstance();
+        VariablesDatabase variablesDatabase = VariablesDatabaseImpl.getInstance();
         String operand = variablesDatabase.getVariable(sourceCodeTokens[0]);
 
         return  stringLiteralValidator.validate(sourceCodeTokens) ||

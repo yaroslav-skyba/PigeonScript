@@ -1,7 +1,7 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.type.interpretable;
 
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenInterpreter;
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenSchema;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenInterpreter;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenSchema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,20 +9,20 @@ import org.springframework.stereotype.Component;
 public class ElseConditionType implements InterpretableType {
 
     @Autowired
-    private PomidorTokenSchema elseConditionSchema;
+    private TokenSchema elseConditionSchema;
 
-    private final PomidorTokenInterpreter elseConditionTokenInterpreter;
+    private final TokenInterpreter elseConditionInterpreter;
 
     @Autowired
-    public ElseConditionType(PomidorTokenInterpreter elseConditionTokenInterpreter) {
+    public ElseConditionType(TokenInterpreter elseConditionInterpreter) {
 
-        this.elseConditionTokenInterpreter = elseConditionTokenInterpreter;
+        this.elseConditionInterpreter = elseConditionInterpreter;
     }
 
     @Override
-    public PomidorTokenInterpreter getInterpreter() {
+    public TokenInterpreter getInterpreter() {
 
-        return elseConditionTokenInterpreter;
+        return elseConditionInterpreter;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class ElseConditionType implements InterpretableType {
     }
 
     @Override
-    public PomidorTokenSchema getSchema() {
+    public TokenSchema getSchema() {
 
         return elseConditionSchema;
     }

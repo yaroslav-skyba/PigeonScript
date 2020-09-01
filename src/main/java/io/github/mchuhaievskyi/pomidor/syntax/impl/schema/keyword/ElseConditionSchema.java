@@ -1,7 +1,7 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.schema.keyword;
 
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenParser;
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenValidator;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenParser;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 public class ElseConditionSchema extends KeywordSchema {
 
     @Autowired
-    public ElseConditionSchema(PomidorTokenValidator elseConditionValidator, PomidorTokenParser elseConditionTokenParser) {
+    public ElseConditionSchema(TokenValidator elseConditionValidator, TokenParser elseConditionParser) {
 
-        super(elseConditionTokenParser, elseConditionValidator);
+        super(elseConditionParser, elseConditionValidator);
     }
 
     @Override

@@ -5,17 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PrintCommandSchema implements PomidorTokenSchema {
+public class PrintCommandSchema implements TokenSchema {
 
-    private final PomidorTokenValidator printCommandValidator;
-    private final PomidorTokenParser printCommandTokenParser;
+    private final TokenValidator printCommandValidator;
+    private final TokenParser printCommandParser;
 
     @Autowired
-    public PrintCommandSchema(PomidorTokenValidator printCommandValidator,
-                              PomidorTokenParser printCommandTokenParser) {
+    public PrintCommandSchema(TokenValidator printCommandValidator,
+                              TokenParser printCommandParser) {
 
         this.printCommandValidator = printCommandValidator;
-        this.printCommandTokenParser = printCommandTokenParser;
+        this.printCommandParser = printCommandParser;
     }
 
     @Override
@@ -25,14 +25,14 @@ public class PrintCommandSchema implements PomidorTokenSchema {
     }
 
     @Override
-    public PomidorTokenValidator getTokenValidator() {
+    public TokenValidator getTokenValidator() {
 
         return printCommandValidator;
     }
 
     @Override
-    public PomidorTokenParser getTokenParser() {
+    public TokenParser getTokenParser() {
 
-        return printCommandTokenParser;
+        return printCommandParser;
     }
 }

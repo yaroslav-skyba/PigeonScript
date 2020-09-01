@@ -1,27 +1,27 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.validator;
 
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenValidator;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class VarDeclarationValidator implements PomidorTokenValidator {
+public class VarDeclarationValidator implements TokenValidator {
 
-    private final PomidorTokenValidator varKeywordValidator;
-    private final PomidorTokenValidator varNameValidator;
-    private final PomidorTokenValidator assigmentOperatorValidator;
-    private final PomidorTokenValidator literalValidator;
+    private final TokenValidator varKeywordValidator;
+    private final TokenValidator varNameValidator;
+    private final TokenValidator assigmentOperatorValidator;
+    private final TokenValidator expressionValidator;
 
     @Autowired
-    public VarDeclarationValidator(PomidorTokenValidator varKeywordValidator,
-                                   PomidorTokenValidator varNameValidator,
-                                   PomidorTokenValidator assigmentOperatorValidator,
-                                   PomidorTokenValidator literalValidator) {
+    public VarDeclarationValidator(TokenValidator varKeywordValidator,
+                                   TokenValidator varNameValidator,
+                                   TokenValidator assigmentOperatorValidator,
+                                   TokenValidator expressionValidator) {
 
         this.varKeywordValidator = varKeywordValidator;
         this.varNameValidator = varNameValidator;
         this.assigmentOperatorValidator = assigmentOperatorValidator;
-        this.literalValidator = literalValidator;
+        this.expressionValidator = expressionValidator;
     }
 
     @Override
@@ -47,7 +47,19 @@ public class VarDeclarationValidator implements PomidorTokenValidator {
             return false;
         }
 
-        return literalValidator.validate(sourceCodeTokens[3]);
+        final int notExpressionTokensCount = 3;
+        final int expressionTokensCount = sourceCodeTokens.length - notExpressionTokensCount;
+        final String[] expressionTokens = new String[expressionTokensCount];
+
+        System.arraycopy(sourceCodeTokens, notExpressionTokensCount, expressionTokens, 0, expressionTokensCount);
+
+        return expressionValidator.validate(expressionTokens);
+    }
+
+    @Override
+    public boolean preValidate(String... sourceCodeTokens) {
+
+        return sourceCodeTokens != null && sourceCodeTokens.length % 2 == 0;
     }
 
     @Override

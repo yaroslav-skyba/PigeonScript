@@ -1,12 +1,12 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.validator.operand;
 
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenValidator;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component
-public class OperandValidator implements PomidorTokenValidator {
+public class OperandValidator implements TokenValidator {
 
     private final Set<SpecificOperandValidator> specificOperandValidators;
 

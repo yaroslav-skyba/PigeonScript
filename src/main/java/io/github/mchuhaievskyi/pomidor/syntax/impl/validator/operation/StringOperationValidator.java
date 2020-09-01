@@ -1,6 +1,8 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.validator.operation;
 
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenValidator;
+import io.github.mchuhaievskyi.pomidor.syntax.impl.validator.expression.SpecificExpressionValidator;
+import io.github.mchuhaievskyi.pomidor.syntax.impl.validator.operand.SpecificOperandValidator;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -8,16 +10,10 @@ import org.springframework.stereotype.Component;
 public class StringOperationValidator extends SpecificOperationValidator<String> {
 
     @Autowired
-    public StringOperationValidator(PomidorTokenValidator stringOperandValidator,
-                                    PomidorTokenValidator assigmentOperatorValidator,
-                                    PomidorTokenValidator stringExpressionValidator) {
+    public StringOperationValidator(SpecificOperandValidator<String> stringOperandValidator,
+                                    TokenValidator assigmentOperatorValidator,
+                                    SpecificExpressionValidator<String> stringExpressionValidator) {
 
         super(stringOperandValidator, assigmentOperatorValidator, stringExpressionValidator);
-    }
-
-    @Override
-    public Class<String> getType() {
-
-        return String.class;
     }
 }

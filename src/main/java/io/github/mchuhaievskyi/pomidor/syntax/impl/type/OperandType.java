@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OperandType implements PomidorTokenType {
+public class OperandType implements TokenType {
 
     @Autowired
-    private PomidorTokenSchema operandSchema;
+    private TokenSchema operandSchema;
 
     @Override
     public String getName() {
@@ -16,7 +16,7 @@ public class OperandType implements PomidorTokenType {
     }
 
     @Override
-    public PomidorTokenSchema getSchema() {
+    public TokenSchema getSchema() {
         return operandSchema;
     }
 }

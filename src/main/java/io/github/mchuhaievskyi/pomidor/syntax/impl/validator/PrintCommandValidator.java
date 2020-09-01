@@ -1,18 +1,17 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.validator;
 
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenValidator;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PrintCommandValidator implements PomidorTokenValidator {
+public class PrintCommandValidator implements TokenValidator {
 
-    private final PomidorTokenValidator printKeywordValidator;
-    private final PomidorTokenValidator expressionValidator;
+    private final TokenValidator printKeywordValidator;
+    private final TokenValidator expressionValidator;
 
     @Autowired
-    public PrintCommandValidator(PomidorTokenValidator printKeywordValidator,
-                                 PomidorTokenValidator expressionValidator) {
+    public PrintCommandValidator(TokenValidator printKeywordValidator, TokenValidator expressionValidator) {
 
         this.printKeywordValidator = printKeywordValidator;
         this.expressionValidator = expressionValidator;
@@ -31,14 +30,13 @@ public class PrintCommandValidator implements PomidorTokenValidator {
             return false;
         }
 
-        final int sourceCodeTokensCount = sourceCodeTokens.length;
-        final int sourceCodeKeywordTokensCount = 1;
-        final int sourceCodeExpressionTokensCount = sourceCodeTokensCount - sourceCodeKeywordTokensCount;
-        final String[] sourceCodeExpressionTokens = new String[sourceCodeExpressionTokensCount];
+        final int notExpressionTokensCount = 1;
+        final int expressionTokensCount = sourceCodeTokens.length - notExpressionTokensCount;
+        final String[] expressionTokens = new String[expressionTokensCount];
 
-        System.arraycopy(sourceCodeTokens, 1, sourceCodeExpressionTokens, 0, sourceCodeExpressionTokensCount);
+        System.arraycopy(sourceCodeTokens, 1, expressionTokens, 0, expressionTokensCount);
 
-        return expressionValidator.validate(sourceCodeExpressionTokens);
+        return expressionValidator.validate(expressionTokens);
     }
 
     @Override

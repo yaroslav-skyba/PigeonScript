@@ -7,15 +7,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class VarDeclarationType implements InterpretableType {
 
-    private final PomidorTokenInterpreter varDeclarationTokenInterpreter;
+    private final TokenInterpreter varDeclarationInterpreter;
 
     @Autowired
-    private PomidorTokenSchema varDeclarationSchema;
+    private TokenSchema varDeclarationSchema;
 
     @Autowired
-    public VarDeclarationType(PomidorTokenInterpreter varDeclarationTokenInterpreter) {
+    public VarDeclarationType(TokenInterpreter varDeclarationInterpreter) {
 
-        this.varDeclarationTokenInterpreter = varDeclarationTokenInterpreter;
+        this.varDeclarationInterpreter = varDeclarationInterpreter;
     }
 
     @Override
@@ -24,13 +24,13 @@ public class VarDeclarationType implements InterpretableType {
     }
 
     @Override
-    public PomidorTokenSchema getSchema() {
+    public TokenSchema getSchema() {
         return varDeclarationSchema;
     }
 
     @Override
-    public PomidorTokenInterpreter getInterpreter() {
+    public TokenInterpreter getInterpreter() {
 
-        return varDeclarationTokenInterpreter;
+        return varDeclarationInterpreter;
     }
 }

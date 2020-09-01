@@ -1,2 +1,34 @@
-var string = "Hello, "
-print string + "world, " + "and buddy!"
+var stringOne = "Hello"
+print stringOne
+var stringTwo = stringOne + ", world! "
+print stringTwo
+stringTwo = stringTwo + stringOne + ", buddy! "
+print stringTwo
+print stringTwo + stringOne + ", everyone!"
+var boolOne = false
+print boolOne
+var boolTwo = boolOne & false | true
+print boolTwo
+boolTwo = boolOne & boolTwo | false
+print boolTwo
+print boolOne & boolTwo | false
+if true then
+    print "if1"
+else
+    print "else1"
+end
+if boolTwo then
+    print "if2"
+else
+    print "else2"
+end
+if true & boolOne | false then
+    print "if3"
+else
+    print "else3"
+end
+if false & boolTwo | true then
+    print "if4"
+else
+    print "else4"
+end

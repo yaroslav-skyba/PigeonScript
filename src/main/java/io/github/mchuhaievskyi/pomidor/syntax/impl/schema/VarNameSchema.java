@@ -5,14 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class VarNameSchema implements PomidorTokenSchema {
+public class VarNameSchema implements TokenSchema {
 
-    private final PomidorTokenValidator varNameValidator;
-    private final PomidorTokenParser varNameTokenParser;
+    private final TokenValidator varNameValidator;
+    private final TokenParser varNameTokenParser;
 
     @Autowired
-    public VarNameSchema(PomidorTokenValidator varNameValidator,
-                         PomidorTokenParser varNameTokenParser) {
+    public VarNameSchema(TokenValidator varNameValidator,
+                         TokenParser varNameTokenParser) {
 
         this.varNameValidator = varNameValidator;
         this.varNameTokenParser = varNameTokenParser;
@@ -27,12 +27,12 @@ public class VarNameSchema implements PomidorTokenSchema {
     }
 
     @Override
-    public PomidorTokenValidator getTokenValidator() {
+    public TokenValidator getTokenValidator() {
         return varNameValidator;
     }
 
     @Override
-    public PomidorTokenParser getTokenParser() {
+    public TokenParser getTokenParser() {
         return varNameTokenParser;
     }
 }

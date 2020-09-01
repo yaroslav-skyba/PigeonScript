@@ -39,7 +39,7 @@ public class Main {
 
             if (!interpreter.interpret(fileLines[i], context)) {
 
-                System.out.println(RED_CONSOLE_TEXT_COLOR + "Line: " + (i+1) + ". An incorrect instruction: \"" + fileLines[i] + "\"");
+                System.out.println(RED_CONSOLE_TEXT_COLOR + "Line: " + (i+1) + ". An incorrect instruction: " + fileLines[i]);
                 System.exit(0);
             }
         }

@@ -1,20 +1,20 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.validator;
 
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenValidator;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class VarNameValidator implements PomidorTokenValidator {
+public class VarNameValidator implements TokenValidator {
 
     @Autowired
-    private PomidorTokenValidator keywordValidator;
+    private TokenValidator keywordValidator;
     @Autowired
-    private PomidorTokenValidator literalValidator;
+    private TokenValidator literalValidator;
     @Autowired
-    private PomidorTokenValidator operatorValidator;
+    private TokenValidator operatorValidator;
     @Autowired
-    private PomidorTokenValidator printCommandValidator;
+    private TokenValidator printCommandValidator;
 
     @Override
     public boolean validate(String... sourceCodeTokens) {

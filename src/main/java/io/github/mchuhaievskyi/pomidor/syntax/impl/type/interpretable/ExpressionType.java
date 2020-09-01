@@ -1,7 +1,7 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.type.interpretable;
 
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenInterpreter;
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenSchema;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenInterpreter;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenSchema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,14 +9,14 @@ import org.springframework.stereotype.Component;
 public class ExpressionType implements InterpretableType {
 
     @Autowired
-    private PomidorTokenSchema expressionSchema;
+    private TokenSchema expressionSchema;
 
-    private final PomidorTokenInterpreter expressionTokenInterpreter;
+    private final TokenInterpreter expressionInterpreter;
 
     @Autowired
-    public ExpressionType(PomidorTokenInterpreter expressionTokenInterpreter) {
+    public ExpressionType(TokenInterpreter expressionInterpreter) {
 
-        this.expressionTokenInterpreter = expressionTokenInterpreter;
+        this.expressionInterpreter = expressionInterpreter;
     }
 
     @Override
@@ -26,14 +26,14 @@ public class ExpressionType implements InterpretableType {
     }
 
     @Override
-    public PomidorTokenSchema getSchema() {
+    public TokenSchema getSchema() {
 
         return expressionSchema;
     }
 
     @Override
-    public PomidorTokenInterpreter getInterpreter() {
+    public TokenInterpreter getInterpreter() {
 
-        return expressionTokenInterpreter;
+        return expressionInterpreter;
     }
 }

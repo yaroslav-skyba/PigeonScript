@@ -1,8 +1,8 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.validator.keyword;
 
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenValidator;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenValidator;
 
-public interface SpecificKeywordValidator extends PomidorTokenValidator {
+public interface SpecificKeywordValidator extends TokenValidator {
 
     String getKeywordConstant();
 

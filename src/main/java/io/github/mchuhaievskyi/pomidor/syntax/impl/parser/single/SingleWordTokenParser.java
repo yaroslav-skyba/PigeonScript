@@ -1,27 +1,27 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.parser.single;
 
-import io.github.mchuhaievskyi.pomidor.syntax.impl.PomidorTokenImpl;
-import io.github.mchuhaievskyi.pomidor.syntax.PomidorToken;
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenParser;
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenType;
+import io.github.mchuhaievskyi.pomidor.syntax.impl.TokenImpl;
+import io.github.mchuhaievskyi.pomidor.syntax.Token;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenParser;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenType;
 
-public abstract class SingleWordTokenParser implements PomidorTokenParser {
+public abstract class SingleWordTokenParser implements TokenParser {
 
-    private PomidorTokenType tokenType;
+    private TokenType type;
 
     @Override
-    public PomidorToken parse(String... tokens) {
+    public Token parse(String... sourceCodeTokens) {
 
-        return new PomidorTokenImpl(getTokenType(), tokens[0]);
+        return new TokenImpl(getTokenType(), sourceCodeTokens[0]);
     }
 
-    public PomidorTokenType getTokenType() {
+    public TokenType getTokenType() {
 
-        return tokenType;
+        return type;
     }
 
-    public void setTokenType(PomidorTokenType tokenType) {
+    public void setTokenType(TokenType type) {
 
-        this.tokenType = tokenType;
+        this.type = type;
     }
 }

@@ -1,9 +1,9 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.type.interpretable;
 
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenInterpreter;
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenType;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenInterpreter;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenType;
 
-public interface InterpretableType extends PomidorTokenType {
+public interface InterpretableType extends TokenType {
 
-    PomidorTokenInterpreter getInterpreter();
+    TokenInterpreter getInterpreter();
 }

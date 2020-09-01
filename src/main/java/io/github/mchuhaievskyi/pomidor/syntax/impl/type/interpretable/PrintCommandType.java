@@ -7,15 +7,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class PrintCommandType implements InterpretableType {
 
-    private final PomidorTokenInterpreter printCommandTokenInterpreter;
+    private final TokenInterpreter printCommandInterpreter;
 
     @Autowired
-    private PomidorTokenSchema printCommandSchema;
+    private TokenSchema printCommandSchema;
 
     @Autowired
-    public PrintCommandType(PomidorTokenInterpreter printCommandTokenInterpreter) {
+    public PrintCommandType(TokenInterpreter printCommandInterpreter) {
 
-        this.printCommandTokenInterpreter = printCommandTokenInterpreter;
+        this.printCommandInterpreter = printCommandInterpreter;
     }
 
     @Override
@@ -25,14 +25,14 @@ public class PrintCommandType implements InterpretableType {
     }
 
     @Override
-    public PomidorTokenSchema getSchema() {
+    public TokenSchema getSchema() {
 
         return printCommandSchema;
     }
 
     @Override
-    public PomidorTokenInterpreter getInterpreter() {
+    public TokenInterpreter getInterpreter() {
 
-        return printCommandTokenInterpreter;
+        return printCommandInterpreter;
     }
 }

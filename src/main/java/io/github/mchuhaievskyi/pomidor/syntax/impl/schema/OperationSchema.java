@@ -1,23 +1,23 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.schema;
 
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenParser;
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenSchema;
-import io.github.mchuhaievskyi.pomidor.syntax.token.PomidorTokenValidator;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenParser;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenSchema;
+import io.github.mchuhaievskyi.pomidor.syntax.token.TokenValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OperationSchema implements PomidorTokenSchema {
+public class OperationSchema implements TokenSchema {
 
-    private final PomidorTokenValidator operationValidator;
-    private final PomidorTokenParser operationTokenParser;
+    private final TokenValidator operationValidator;
+    private final TokenParser operationParser;
 
     @Autowired
-    public OperationSchema(PomidorTokenValidator operationValidator,
-                           PomidorTokenParser operationTokenParser) {
+    public OperationSchema(TokenValidator operationValidator,
+                           TokenParser operationParser) {
 
         this.operationValidator = operationValidator;
-        this.operationTokenParser = operationTokenParser;
+        this.operationParser = operationParser;
     }
 
     @Override
@@ -27,14 +27,14 @@ public class OperationSchema implements PomidorTokenSchema {
     }
 
     @Override
-    public PomidorTokenValidator getTokenValidator() {
+    public TokenValidator getTokenValidator() {
 
         return operationValidator;
     }
 
     @Override
-    public PomidorTokenParser getTokenParser() {
+    public TokenParser getTokenParser() {
 
-        return operationTokenParser;
+        return operationParser;
     }
 }

@@ -5,11 +5,11 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component
-public class IntOperatorValidator implements SpecificOperatorValidator<Integer> {
+public class IntOperatorValidator implements SpecificOperatorValidator<Long> {
 
     @Override
-    public Class<Integer> getRelatedType() {
-        return Integer.class;
+    public Class<Long> getRelatedType() {
+        return Long.class;
     }
 
     @Override
