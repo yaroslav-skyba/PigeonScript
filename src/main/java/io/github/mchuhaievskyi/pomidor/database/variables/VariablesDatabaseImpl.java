@@ -1,4 +1,4 @@
-package io.github.mchuhaievskyi.pomidor.database;
+package io.github.mchuhaievskyi.pomidor.database.variables;
 
 import java.util.*;
 

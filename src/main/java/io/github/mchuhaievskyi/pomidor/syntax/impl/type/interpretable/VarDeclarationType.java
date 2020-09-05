@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class VarDeclarationType implements InterpretableType {
 
-    private final TokenInterpreter varDeclarationInterpreter;
+    private final AbstractTokenInterpreter varDeclarationInterpreter;
 
     @Autowired
     private TokenSchema varDeclarationSchema;
 
     @Autowired
-    public VarDeclarationType(TokenInterpreter varDeclarationInterpreter) {
+    public VarDeclarationType(AbstractTokenInterpreter varDeclarationInterpreter) {
 
         this.varDeclarationInterpreter = varDeclarationInterpreter;
     }
@@ -29,7 +29,7 @@ public class VarDeclarationType implements InterpretableType {
     }
 
     @Override
-    public TokenInterpreter getInterpreter() {
+    public AbstractTokenInterpreter getInterpreter() {
 
         return varDeclarationInterpreter;
     }

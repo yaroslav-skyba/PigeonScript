@@ -5,8 +5,8 @@ import java.util.Set;
 
 public interface SpecificOperatorValidator<T> extends TokenValidator {
 
-    Class<T> getRelatedType();
     Set<String> getOperatorSymbols();
+    Class<T> getRelatedType();
 
     default boolean validate(String... sourceCodeTokens) {
 

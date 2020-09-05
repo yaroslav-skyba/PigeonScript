@@ -3,11 +3,11 @@ package io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.print;
 import io.github.mchuhaievskyi.pomidor.syntax.Token;
 import io.github.mchuhaievskyi.pomidor.syntax.impl.TokenImpl;
 import io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.expression.SpecificExpressionInterpreter;
-import io.github.mchuhaievskyi.pomidor.syntax.token.TokenInterpreter;
+import io.github.mchuhaievskyi.pomidor.syntax.token.AbstractTokenInterpreter;
 
 import java.util.List;
 
-public abstract class SpecificPrintCommandInterpreter<T> extends TokenInterpreter {
+public abstract class SpecificPrintCommandInterpreter<T> extends AbstractTokenInterpreter {
 
     private final SpecificExpressionInterpreter<T> specificExpressionTokenInterpreter;
 

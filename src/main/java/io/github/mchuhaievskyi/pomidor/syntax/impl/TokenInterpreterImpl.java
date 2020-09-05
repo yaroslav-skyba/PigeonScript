@@ -38,7 +38,7 @@ public class TokenInterpreterImpl implements io.github.mchuhaievskyi.pomidor.syn
                 continue;
             }
 
-            final TokenInterpreter interpreter = interpretableType.getInterpreter();
+            final AbstractTokenInterpreter interpreter = interpretableType.getInterpreter();
 
             if (!interpreter.isNotInterpretationBlocked()) {
 

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class VarDeclarationTokenParser implements TokenParser {
+public class VarDeclarationParser implements TokenParser {
 
     @Autowired
     private TokenType keywordType;

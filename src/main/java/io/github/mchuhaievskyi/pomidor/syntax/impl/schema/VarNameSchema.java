@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 public class VarNameSchema implements TokenSchema {
 
     private final TokenValidator varNameValidator;
-    private final TokenParser varNameTokenParser;
+    private final TokenParser varNameParser;
 
     @Autowired
     public VarNameSchema(TokenValidator varNameValidator,
-                         TokenParser varNameTokenParser) {
+                         TokenParser varNameParser) {
 
         this.varNameValidator = varNameValidator;
-        this.varNameTokenParser = varNameTokenParser;
+        this.varNameParser = varNameParser;
     }
 
     @Override
@@ -33,6 +33,6 @@ public class VarNameSchema implements TokenSchema {
 
     @Override
     public TokenParser getTokenParser() {
-        return varNameTokenParser;
+        return varNameParser;
     }
 }

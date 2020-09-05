@@ -1,5 +1,6 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.validator;
 
+import io.github.mchuhaievskyi.pomidor.syntax.impl.validator.expression.SpecificExpressionValidator;
 import io.github.mchuhaievskyi.pomidor.syntax.token.TokenValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -8,14 +9,16 @@ import org.springframework.stereotype.Component;
 public class IfConditionValidator implements TokenValidator {
 
     private final TokenValidator ifKeywordValidator;
-    private final TokenValidator expressionValidator;
+    private final SpecificExpressionValidator<Boolean> boolExpressionValidator;
     private final TokenValidator thenKeywordValidator;
 
     @Autowired
-    public IfConditionValidator(TokenValidator ifKeywordValidator, TokenValidator expressionValidator, TokenValidator thenKeywordValidator) {
+    public IfConditionValidator(TokenValidator ifKeywordValidator,
+                                SpecificExpressionValidator<Boolean> boolExpressionValidator,
+                                TokenValidator thenKeywordValidator) {
 
         this.ifKeywordValidator = ifKeywordValidator;
-        this.expressionValidator = expressionValidator;
+        this.boolExpressionValidator = boolExpressionValidator;
         this.thenKeywordValidator = thenKeywordValidator;
     }
 
@@ -40,7 +43,7 @@ public class IfConditionValidator implements TokenValidator {
 
         System.arraycopy(sourceCodeTokens, tokensArrayCopySrcPos, expressionTokens, 0, expressionTokensCount);
 
-        if (!expressionValidator.validate(expressionTokens)) {
+        if (!boolExpressionValidator.validate(expressionTokens)) {
 
             return false;
         }

@@ -3,11 +3,11 @@ package io.github.mchuhaievskyi.pomidor.syntax.impl.validator.literal;
 import org.springframework.stereotype.Component;
 
 @Component
-public class IntLiteralValidator implements SpecificLiteralValidator<Integer> {
+public class IntLiteralValidator implements SpecificLiteralValidator<Long> {
 
     @Override
-    public Class<Integer> getType() {
-        return Integer.class;
+    public Class<Long> getType() {
+        return Long.class;
     }
 
     @Override

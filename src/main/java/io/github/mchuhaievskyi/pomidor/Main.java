@@ -1,5 +1,6 @@
 package io.github.mchuhaievskyi.pomidor;
 
+import io.github.mchuhaievskyi.pomidor.database.instructions.InstructionsDatabaseImpl;
 import io.github.mchuhaievskyi.pomidor.syntax.SourceFileReader;
 import io.github.mchuhaievskyi.pomidor.syntax.impl.*;
 import io.github.mchuhaievskyi.pomidor.syntax.TokenInterpreter;
@@ -36,6 +37,8 @@ public class Main {
         final TokenInterpreter interpreter = context.getBean(TokenInterpreterImpl.class);
 
         for (int i = 0; i < fileLines.length; i++) {
+
+            new InstructionsDatabaseImpl().add(fileLines[i]);
 
             if (!interpreter.interpret(fileLines[i], context)) {
 

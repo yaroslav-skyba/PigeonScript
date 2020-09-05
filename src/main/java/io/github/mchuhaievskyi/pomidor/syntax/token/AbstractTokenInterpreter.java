@@ -5,7 +5,7 @@ import io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.InterpretationBlo
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Set;
 
-public abstract class TokenInterpreter {
+public abstract class AbstractTokenInterpreter {
 
     @Autowired
     private Set<InterpretationBlocker> interpretationBlockers;

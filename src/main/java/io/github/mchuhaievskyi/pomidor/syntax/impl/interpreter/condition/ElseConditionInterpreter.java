@@ -30,6 +30,7 @@ public class ElseConditionInterpreter extends ConditionInterpreter {
         if (isIfConditionTrue) {
 
             isElseConditionTrue = false;
+
             return true;
         }
 

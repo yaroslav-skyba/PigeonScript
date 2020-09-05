@@ -5,7 +5,7 @@ import io.github.mchuhaievskyi.pomidor.syntax.Token;
 import io.github.mchuhaievskyi.pomidor.syntax.token.TokenParser;
 import io.github.mchuhaievskyi.pomidor.syntax.token.TokenType;
 
-public abstract class SingleWordTokenParser implements TokenParser {
+public abstract class SingleWordParser implements TokenParser {
 
     private TokenType type;
 

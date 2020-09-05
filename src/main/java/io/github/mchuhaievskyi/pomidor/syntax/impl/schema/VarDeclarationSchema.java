@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 public class VarDeclarationSchema implements TokenSchema {
 
     private final TokenValidator varDeclarationValidator;
-    private final TokenParser varDeclarationTokenParser;
+    private final TokenParser varDeclarationParser;
 
     @Autowired
     public VarDeclarationSchema(TokenValidator varDeclarationValidator,
-                                TokenParser varDeclarationTokenParser) {
+                                TokenParser varDeclarationParser) {
 
         this.varDeclarationValidator = varDeclarationValidator;
-        this.varDeclarationTokenParser = varDeclarationTokenParser;
+        this.varDeclarationParser = varDeclarationParser;
     }
 
     @Override
@@ -32,6 +32,6 @@ public class VarDeclarationSchema implements TokenSchema {
 
     @Override
     public TokenParser getTokenParser() {
-        return varDeclarationTokenParser;
+        return varDeclarationParser;
     }
 }

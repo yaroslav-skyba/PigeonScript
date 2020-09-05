@@ -7,14 +7,14 @@ import java.util.Set;
 public class AssigmentOperatorValidator implements SpecificOperatorValidator<Object> {
 
     @Override
-    public Class<Object> getRelatedType() {
-
-        return Object.class;
-    }
-
-    @Override
     public Set<String> getOperatorSymbols() {
 
         return Set.of("=");
+    }
+
+    @Override
+    public Class<Object> getRelatedType() {
+
+        return Object.class;
     }
 }

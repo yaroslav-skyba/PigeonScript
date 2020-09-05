@@ -1,15 +1,15 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.operation;
 
-import io.github.mchuhaievskyi.pomidor.database.VariablesDatabase;
-import io.github.mchuhaievskyi.pomidor.database.VariablesDatabaseImpl;
+import io.github.mchuhaievskyi.pomidor.database.variables.VariablesDatabase;
+import io.github.mchuhaievskyi.pomidor.database.variables.VariablesDatabaseImpl;
 import io.github.mchuhaievskyi.pomidor.syntax.Token;
 import io.github.mchuhaievskyi.pomidor.syntax.impl.TokenParserImpl;
 import io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.expression.SpecificExpressionInterpreter;
-import io.github.mchuhaievskyi.pomidor.syntax.token.TokenInterpreter;
+import io.github.mchuhaievskyi.pomidor.syntax.token.AbstractTokenInterpreter;
 import io.github.mchuhaievskyi.pomidor.syntax.token.TokenType;
 import java.util.List;
 
-public abstract class SpecificOperationInterpreter<T> extends TokenInterpreter {
+public abstract class SpecificOperationInterpreter<T> extends AbstractTokenInterpreter {
 
     final VariablesDatabase variablesDatabase = VariablesDatabaseImpl.getInstance();
 

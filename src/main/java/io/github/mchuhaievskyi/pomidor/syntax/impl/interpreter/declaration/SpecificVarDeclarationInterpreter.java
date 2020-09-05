@@ -1,22 +1,22 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.declaration;
 
-import io.github.mchuhaievskyi.pomidor.database.VariablesDatabase;
-import io.github.mchuhaievskyi.pomidor.database.VariablesDatabaseImpl;
+import io.github.mchuhaievskyi.pomidor.database.variables.VariablesDatabase;
+import io.github.mchuhaievskyi.pomidor.database.variables.VariablesDatabaseImpl;
 import io.github.mchuhaievskyi.pomidor.syntax.Token;
 import io.github.mchuhaievskyi.pomidor.syntax.impl.TokenImpl;
 import io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.expression.SpecificExpressionInterpreter;
-import io.github.mchuhaievskyi.pomidor.syntax.token.TokenInterpreter;
+import io.github.mchuhaievskyi.pomidor.syntax.token.AbstractTokenInterpreter;
 import java.util.List;
 
-public abstract class SpecificVarDeclarationInterpreter<T> extends TokenInterpreter {
+public abstract class SpecificVarDeclarationInterpreter<T> extends AbstractTokenInterpreter {
 
     final VariablesDatabase variablesDatabase = VariablesDatabaseImpl.getInstance();
 
-    private final SpecificExpressionInterpreter<T> specificExpressionTokenInterpreter;
+    private final SpecificExpressionInterpreter<T> specificExpressionInterpreter;
 
-    public SpecificVarDeclarationInterpreter(SpecificExpressionInterpreter<T> specificExpressionTokenInterpreter) {
+    public SpecificVarDeclarationInterpreter(SpecificExpressionInterpreter<T> specificExpressionInterpreter) {
 
-        this.specificExpressionTokenInterpreter = specificExpressionTokenInterpreter;
+        this.specificExpressionInterpreter = specificExpressionInterpreter;
     }
 
     @Override
@@ -24,6 +24,7 @@ public abstract class SpecificVarDeclarationInterpreter<T> extends TokenInterpre
 
         final List<Token> subTokens = token.getSubTokens();
         final String assignableVarName = subTokens.get(1).getSourceCode();
+
         String assignableVarValue = variablesDatabase.getVariable(assignableVarName);
 
         if (assignableVarValue != null) {
@@ -32,24 +33,23 @@ public abstract class SpecificVarDeclarationInterpreter<T> extends TokenInterpre
         }
 
         final List<Token> expressionTokens = subTokens.subList(3, subTokens.size());
-        final String[] expressionSourceCode = new String[expressionTokens.size()];
+        final String[] expressionSourceCodeLines = new String[expressionTokens.size()];
 
-        for (int i = 0; i < expressionSourceCode.length; i++) {
+        for (int i = 0; i < expressionSourceCodeLines.length; i++) {
 
-            expressionSourceCode[i] = expressionTokens.get(i).getSourceCode();
+            expressionSourceCodeLines[i] = expressionTokens.get(i).getSourceCode();
         }
 
-        final String expressionSourceCodeLine = String.join(" ", expressionSourceCode);
-        final Token expressionToken = new TokenImpl(token.getType(), expressionSourceCodeLine, expressionTokens);
+        final Token expressionToken = new TokenImpl(token.getType(), String.join(" ", expressionSourceCodeLines), expressionTokens);
 
-        if (!specificExpressionTokenInterpreter.interpret(expressionToken)) {
+        if (!specificExpressionInterpreter.interpret(expressionToken)) {
 
             return false;
         }
 
         try {
 
-            assignableVarValue = specificExpressionTokenInterpreter.getExpressionResult(expressionToken).toString();
+            assignableVarValue = specificExpressionInterpreter.getExpressionResult(expressionToken).toString();
 
         } catch (Exception e) {
 

@@ -1,25 +1,25 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.declaration;
 
 import io.github.mchuhaievskyi.pomidor.syntax.Token;
-import io.github.mchuhaievskyi.pomidor.syntax.token.TokenInterpreter;
+import io.github.mchuhaievskyi.pomidor.syntax.token.AbstractTokenInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component
-public class VarDeclarationInterpreter extends TokenInterpreter {
+public class VarDeclarationInterpreter extends AbstractTokenInterpreter {
 
-    private final Set<SpecificVarDeclarationInterpreter> specificVarDeclarationTokenInterpreters;
+    private final Set<SpecificVarDeclarationInterpreter<?>> specificVarDeclarationInterpreters;
 
     @Autowired
-    public VarDeclarationInterpreter(Set<SpecificVarDeclarationInterpreter> specificVarDeclarationTokenInterpreters) {
+    public VarDeclarationInterpreter(Set<SpecificVarDeclarationInterpreter<?>> specificVarDeclarationInterpreters) {
 
-        this.specificVarDeclarationTokenInterpreters = specificVarDeclarationTokenInterpreters;
+        this.specificVarDeclarationInterpreters = specificVarDeclarationInterpreters;
     }
 
     @Override
     public boolean interpret(Token token) {
 
-        return specificVarDeclarationTokenInterpreters.stream().anyMatch(v -> v.interpret(token));
+        return specificVarDeclarationInterpreters.stream().anyMatch(v -> v.interpret(token));
     }
 }

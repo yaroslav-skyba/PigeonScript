@@ -13,8 +13,6 @@ public class VarNameValidator implements TokenValidator {
     private TokenValidator literalValidator;
     @Autowired
     private TokenValidator operatorValidator;
-    @Autowired
-    private TokenValidator printCommandValidator;
 
     @Override
     public boolean validate(String... sourceCodeTokens) {
@@ -28,7 +26,6 @@ public class VarNameValidator implements TokenValidator {
                 sourceCodeTokens[0].matches("[a-zA-Z_]+") &&
                 !keywordValidator.validate(sourceCodeTokens[0]) &&
                 !literalValidator.validate(sourceCodeTokens[0]) &&
-                !operatorValidator.validate(sourceCodeTokens[0]) &&
-                !printCommandValidator.validate(sourceCodeTokens[0]);
+                !operatorValidator.validate(sourceCodeTokens[0]);
     }
 }

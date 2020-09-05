@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class PrintCommandType implements InterpretableType {
 
-    private final TokenInterpreter printCommandInterpreter;
+    private final AbstractTokenInterpreter printCommandInterpreter;
 
     @Autowired
     private TokenSchema printCommandSchema;
 
     @Autowired
-    public PrintCommandType(TokenInterpreter printCommandInterpreter) {
+    public PrintCommandType(AbstractTokenInterpreter printCommandInterpreter) {
 
         this.printCommandInterpreter = printCommandInterpreter;
     }
@@ -31,7 +31,7 @@ public class PrintCommandType implements InterpretableType {
     }
 
     @Override
-    public TokenInterpreter getInterpreter() {
+    public AbstractTokenInterpreter getInterpreter() {
 
         return printCommandInterpreter;
     }

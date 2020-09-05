@@ -1,22 +1,19 @@
-package io.github.mchuhaievskyi.pomidor.syntax.impl.validator;
+package io.github.mchuhaievskyi.pomidor.syntax.impl.validator.declaration;
 
+import io.github.mchuhaievskyi.pomidor.syntax.impl.validator.expression.SpecificExpressionValidator;
 import io.github.mchuhaievskyi.pomidor.syntax.token.TokenValidator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
-public class VarDeclarationValidator implements TokenValidator {
+public abstract class SpecificVarDeclarationValidator<T> implements TokenValidator {
 
     private final TokenValidator varKeywordValidator;
     private final TokenValidator varNameValidator;
     private final TokenValidator assigmentOperatorValidator;
-    private final TokenValidator expressionValidator;
+    private final SpecificExpressionValidator<T> expressionValidator;
 
-    @Autowired
-    public VarDeclarationValidator(TokenValidator varKeywordValidator,
-                                   TokenValidator varNameValidator,
-                                   TokenValidator assigmentOperatorValidator,
-                                   TokenValidator expressionValidator) {
+    public SpecificVarDeclarationValidator(TokenValidator varKeywordValidator,
+                                           TokenValidator varNameValidator,
+                                           TokenValidator assigmentOperatorValidator,
+                                           SpecificExpressionValidator<T> expressionValidator) {
 
         this.varKeywordValidator = varKeywordValidator;
         this.varNameValidator = varNameValidator;
@@ -64,6 +61,7 @@ public class VarDeclarationValidator implements TokenValidator {
 
     @Override
     public int getExpectedTokensCount() {
+
         return 4;
     }
 }

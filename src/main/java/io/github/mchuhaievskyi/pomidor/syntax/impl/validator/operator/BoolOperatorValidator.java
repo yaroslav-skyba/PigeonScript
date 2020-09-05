@@ -7,12 +7,13 @@ import java.util.Set;
 public class BoolOperatorValidator implements SpecificOperatorValidator<Boolean> {
 
     @Override
-    public Class<Boolean> getRelatedType() {
-        return Boolean.class;
+    public Set<String> getOperatorSymbols() {
+        return Set.of("&", "|");
     }
 
     @Override
-    public Set<String> getOperatorSymbols() {
-        return Set.of("&", "|");
+    public Class<Boolean> getRelatedType() {
+
+        return Boolean.class;
     }
 }

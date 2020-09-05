@@ -1,9 +1,9 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.condition;
 
 import io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.InterpretationBlocker;
-import io.github.mchuhaievskyi.pomidor.syntax.token.TokenInterpreter;
+import io.github.mchuhaievskyi.pomidor.syntax.token.AbstractTokenInterpreter;
 
-public abstract class ConditionInterpreter extends TokenInterpreter implements InterpretationBlocker {
+public abstract class ConditionInterpreter extends AbstractTokenInterpreter implements InterpretationBlocker {
 
     public abstract void setIsConditionTrue(Boolean isConditionTrue);
     public abstract Boolean getIsConditionTrue();

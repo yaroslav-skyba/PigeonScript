@@ -1,17 +1,14 @@
-package io.github.mchuhaievskyi.pomidor.syntax.impl.validator;
+package io.github.mchuhaievskyi.pomidor.syntax.impl.validator.print;
 
+import io.github.mchuhaievskyi.pomidor.syntax.impl.validator.expression.SpecificExpressionValidator;
 import io.github.mchuhaievskyi.pomidor.syntax.token.TokenValidator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
-public class PrintCommandValidator implements TokenValidator {
+public abstract class SpecificPrintCommandValidator<T> implements TokenValidator {
 
     private final TokenValidator printKeywordValidator;
-    private final TokenValidator expressionValidator;
+    private final SpecificExpressionValidator<T> expressionValidator;
 
-    @Autowired
-    public PrintCommandValidator(TokenValidator printKeywordValidator, TokenValidator expressionValidator) {
+    public SpecificPrintCommandValidator(TokenValidator printKeywordValidator, SpecificExpressionValidator<T> expressionValidator) {
 
         this.printKeywordValidator = printKeywordValidator;
         this.expressionValidator = expressionValidator;

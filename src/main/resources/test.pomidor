@@ -32,3 +32,22 @@ if false & boolTwo | true then
 else
     print "else4"
 end
+var flag = false
+label flag
+if flag then
+    print "Good"
+else
+    print "Bad"
+    flag = true
+    goto flag
+end
+var flagTwo = false
+label flagTwo
+if flagTwo then
+    print "Good2"
+    goto flag
+else
+    print "Bad2"
+    flagTwo = true
+    goto flagTwo
+end

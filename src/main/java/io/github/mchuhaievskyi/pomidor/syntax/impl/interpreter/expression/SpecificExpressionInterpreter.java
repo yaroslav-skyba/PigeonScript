@@ -1,15 +1,15 @@
 package io.github.mchuhaievskyi.pomidor.syntax.impl.interpreter.expression;
 
-import io.github.mchuhaievskyi.pomidor.database.VariablesDatabase;
-import io.github.mchuhaievskyi.pomidor.database.VariablesDatabaseImpl;
+import io.github.mchuhaievskyi.pomidor.database.variables.VariablesDatabase;
+import io.github.mchuhaievskyi.pomidor.database.variables.VariablesDatabaseImpl;
 import io.github.mchuhaievskyi.pomidor.syntax.Token;
-import io.github.mchuhaievskyi.pomidor.syntax.token.TokenInterpreter;
+import io.github.mchuhaievskyi.pomidor.syntax.token.AbstractTokenInterpreter;
 import io.github.mchuhaievskyi.pomidor.syntax.token.TokenType;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class SpecificExpressionInterpreter<T> extends TokenInterpreter {
+public abstract class SpecificExpressionInterpreter<T> extends AbstractTokenInterpreter {
 
     final VariablesDatabase variablesDatabase = VariablesDatabaseImpl.getInstance();
 
