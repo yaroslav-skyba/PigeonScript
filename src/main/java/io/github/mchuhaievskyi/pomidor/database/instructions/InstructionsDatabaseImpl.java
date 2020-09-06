@@ -3,6 +3,8 @@ package io.github.mchuhaievskyi.pomidor.database.instructions;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class InstructionsDatabaseImpl implements InstructionsDatabase {
@@ -12,7 +14,16 @@ public class InstructionsDatabaseImpl implements InstructionsDatabase {
     @Override
     public void add(String instruction) {
 
-        INSTRUCTIONS.add(instruction);
+        final Matcher tokenParserMatcher = Pattern.compile("\"([^\"]*)\"|(\\S+)").matcher(instruction);
+
+        final List<String> instructionTokens = new ArrayList<>();
+
+        while (tokenParserMatcher.find()) {
+
+            instructionTokens.add(tokenParserMatcher.group());
+        }
+
+        INSTRUCTIONS.add(String.join(" ", instructionTokens));
     }
 
     @Override

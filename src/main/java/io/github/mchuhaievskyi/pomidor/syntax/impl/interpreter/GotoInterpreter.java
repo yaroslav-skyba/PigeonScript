@@ -5,6 +5,7 @@ import io.github.mchuhaievskyi.pomidor.database.instructions.InstructionsDatabas
 import io.github.mchuhaievskyi.pomidor.syntax.Token;
 import io.github.mchuhaievskyi.pomidor.syntax.TokenInterpreter;
 import io.github.mchuhaievskyi.pomidor.syntax.impl.TokenInterpreterImpl;
+import io.github.mchuhaievskyi.pomidor.syntax.impl.validator.keyword.SpecificKeywordValidator;
 import io.github.mchuhaievskyi.pomidor.syntax.token.AbstractTokenInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -16,17 +17,20 @@ import java.util.List;
 public class GotoInterpreter extends AbstractTokenInterpreter {
 
     private final InstructionsDatabase instructionsDatabaseImpl;
+    private final SpecificKeywordValidator labelKeywordValidator;
 
     @Autowired
-    public GotoInterpreter(InstructionsDatabase instructionsDatabaseImpl) {
+    public GotoInterpreter(InstructionsDatabase instructionsDatabaseImpl, SpecificKeywordValidator labelKeywordValidator) {
 
         this.instructionsDatabaseImpl = instructionsDatabaseImpl;
+        this.labelKeywordValidator = labelKeywordValidator;
     }
 
     @Override
     public boolean interpret(Token token) {
 
-        final List<String> instructionListUnderLabel = instructionsDatabaseImpl.getInstructionsUnderLabel("label " + token.getSubTokens().get(1).getSourceCode() + "\r");
+        final String label = labelKeywordValidator.getKeywordConstant() + " " + token.getSubTokens().get(1).getSourceCode();
+        final List<String> instructionListUnderLabel = instructionsDatabaseImpl.getInstructionsUnderLabel(label);
 
         final ApplicationContext context = new AnnotationConfigApplicationContext(Main.class.getPackageName());
         final TokenInterpreter interpreter = context.getBean(TokenInterpreterImpl.class);

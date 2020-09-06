@@ -1,4 +1,4 @@
-var stringOne = "Hello"
+var       stringOne = "Hello"
 print stringOne
 var stringTwo = stringOne + ", world! "
 print stringTwo
@@ -33,21 +33,11 @@ else
     print "else4"
 end
 var flag = false
-label flag
+  label   l
 if flag then
     print "Good"
 else
     print "Bad"
     flag = true
-    goto flag
-end
-var flagTwo = false
-label flagTwo
-if flagTwo then
-    print "Good2"
-    goto flag
-else
-    print "Bad2"
-    flagTwo = true
-    goto flagTwo
+    goto l
 end
