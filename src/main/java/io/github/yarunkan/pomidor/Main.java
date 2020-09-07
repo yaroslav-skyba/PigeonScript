@@ -10,8 +10,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class Main {
 
-    private final static String RED_CONSOLE_TEXT_COLOR = "\033[0;31m";
-
     public static void main(String[] args) {
 
         new Main().start(args[0]);
@@ -20,7 +18,10 @@ public class Main {
     private void start(String filePath) {
 
         final SourceFileReader fileReader = new SourceFileReaderImpl(new SourceFileNameValidatorImpl());
+
         String[] fileLines = new String[0];
+
+        final String redConsoleTextColor = "\033[0;31m";
 
         try {
 
@@ -29,7 +30,7 @@ public class Main {
         } catch (IllegalArgumentException e) {
 
             System.out.println(e.getMessage());
-            System.out.println(RED_CONSOLE_TEXT_COLOR + "Usage: pomidor <file_path>");
+            System.out.println(redConsoleTextColor + "Usage: ps <file_path>");
             System.exit(0);
         }
 
@@ -42,7 +43,7 @@ public class Main {
 
             if (!interpreter.interpret(fileLines[i], context)) {
 
-                System.out.println(RED_CONSOLE_TEXT_COLOR + "Line: " + (i+1) + ". An incorrect instruction: " + fileLines[i]);
+                System.out.println(redConsoleTextColor + "Line: " + (i+1) + ". An incorrect instruction: " + fileLines[i]);
                 System.exit(0);
             }
         }
