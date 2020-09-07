@@ -1,5 +1,6 @@
 package io.github.yarunkan.pomidor.syntax.impl.interpreter.expression;
 
+import io.github.yarunkan.pomidor.database.variables.VariablesDatabase;
 import io.github.yarunkan.pomidor.syntax.Token;
 import io.github.yarunkan.pomidor.syntax.token.TokenType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,19 +11,18 @@ import java.util.List;
 public class BoolExpressionInterpreter extends SpecificExpressionInterpreter<Boolean> {
 
     @Autowired
-    public BoolExpressionInterpreter(TokenType operandType, TokenType operatorType) {
+    public BoolExpressionInterpreter(TokenType operandType, TokenType operatorType, VariablesDatabase variablesDatabase) {
 
-        super(operandType, operatorType);
+        super(variablesDatabase, operandType, operatorType);
     }
 
     @Override
     Boolean[] getExpressionOperands(List<Token> expressionTokens) {
 
         final String[] sourceCodeOperands = getSourceCodeOperands(expressionTokens);
-        final int expressionOperandsLength = sourceCodeOperands.length;
-        final Boolean[] boolOperands = new Boolean[expressionOperandsLength];
+        final Boolean[] boolOperands = new Boolean[sourceCodeOperands.length];
 
-        for (int i = 0; i < expressionOperandsLength; i++) {
+        for (int i = 0; i < boolOperands.length; i++) {
 
             if (sourceCodeOperands[i].equals("true")) {
 

@@ -4,31 +4,31 @@ import io.github.yarunkan.pomidor.syntax.Token;
 import io.github.yarunkan.pomidor.syntax.impl.TokenImpl;
 import io.github.yarunkan.pomidor.syntax.token.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Component
 public class PrintCommandParser implements TokenParser {
 
-    @Autowired
-    private TokenType printCommandType;
-    @Autowired
-    private TokenParser keywordParser;
-
+    private final TokenType printCommandType;
+    private final TokenParser keywordParser;
     private final TokenParser expressionParser;
 
     @Autowired
-    public PrintCommandParser(TokenParser expressionParser) {
+    public PrintCommandParser(TokenParser expressionParser, @Lazy TokenType printCommandType, @Lazy TokenParser keywordParser) {
 
         this.expressionParser = expressionParser;
+        this.printCommandType = printCommandType;
+        this.keywordParser = keywordParser;
     }
 
     @Override
     public Token parse(String... sourceCodeTokens) {
 
-        final List<Token> tokensList = new ArrayList<>();
+        final List<Token> tokenList = new ArrayList<>();
 
-        tokensList.add(keywordParser.parse(sourceCodeTokens[0]));
+        tokenList.add(keywordParser.parse(sourceCodeTokens[0]));
 
         final int notExpressionTokensCount = 1;
         final int expressionTokensCount = sourceCodeTokens.length - notExpressionTokensCount;
@@ -36,8 +36,8 @@ public class PrintCommandParser implements TokenParser {
 
         System.arraycopy(sourceCodeTokens, notExpressionTokensCount, expressionTokens, 0, expressionTokensCount);
 
-        tokensList.addAll(expressionParser.parse(expressionTokens).getSubTokens());
+        tokenList.addAll(expressionParser.parse(expressionTokens).getSubTokens());
 
-        return new TokenImpl(printCommandType, String.join(" ", sourceCodeTokens), tokensList);
+        return new TokenImpl(printCommandType, String.join(" ", sourceCodeTokens), tokenList);
     }
 }

@@ -5,6 +5,7 @@ import io.github.yarunkan.pomidor.syntax.impl.TokenImpl;
 import io.github.yarunkan.pomidor.syntax.token.TokenParser;
 import io.github.yarunkan.pomidor.syntax.token.TokenType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.ArrayList;
@@ -12,33 +13,31 @@ import java.util.ArrayList;
 @Component
 public class ExpressionParser implements TokenParser {
 
-    @Autowired
-    private TokenType expressionType;
-
+    private final TokenType expressionType;
     private final TokenParser operandParser;
     private final TokenParser operatorParser;
 
     @Autowired
-    public ExpressionParser(TokenParser operandParser,
-                            TokenParser operatorParser) {
+    public ExpressionParser(@Lazy TokenParser operandParser, TokenParser operatorParser, TokenType expressionType) {
 
         this.operandParser = operandParser;
         this.operatorParser = operatorParser;
+        this.expressionType = expressionType;
     }
 
     @Override
     public Token parse(String... sourceCodeTokens) {
 
-        final List<Token> tokensList = new ArrayList<>();
+        final List<Token> tokenList = new ArrayList<>();
 
-        tokensList.add(operandParser.parse(sourceCodeTokens[0]));
+        tokenList.add(operandParser.parse(sourceCodeTokens[0]));
 
         for (int i = 1; i < sourceCodeTokens.length; i += 2) {
 
-            tokensList.add(operatorParser.parse(sourceCodeTokens[i]));
-            tokensList.add(operandParser.parse(sourceCodeTokens[i+1]));
+            tokenList.add(operatorParser.parse(sourceCodeTokens[i]));
+            tokenList.add(operandParser.parse(sourceCodeTokens[i+1]));
         }
 
-        return new TokenImpl(expressionType, String.join(" ", sourceCodeTokens), tokensList);
+        return new TokenImpl(expressionType, String.join(" ", sourceCodeTokens), tokenList);
     }
 }

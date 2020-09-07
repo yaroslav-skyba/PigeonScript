@@ -2,21 +2,22 @@ package io.github.yarunkan.pomidor.syntax.impl.interpreter.condition;
 
 import io.github.yarunkan.pomidor.syntax.Token;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EndConditionInterpreter extends ConditionInterpreter {
 
     private Boolean isEndConditionTrue = null;
+
     private final ConditionInterpreter elseConditionInterpreter;
+    private final ConditionInterpreter ifConditionInterpreter;
 
     @Autowired
-    private ConditionInterpreter ifConditionInterpreter;
-
-    @Autowired
-    public EndConditionInterpreter(ConditionInterpreter elseConditionInterpreter) {
+    public EndConditionInterpreter(ConditionInterpreter elseConditionInterpreter, @Lazy ConditionInterpreter ifConditionInterpreter) {
 
         this.elseConditionInterpreter = elseConditionInterpreter;
+        this.ifConditionInterpreter = ifConditionInterpreter;
     }
 
     @Override

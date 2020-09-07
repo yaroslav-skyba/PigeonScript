@@ -8,18 +8,18 @@ import java.util.Set;
 @Component
 public class PrintCommandValidator implements TokenValidator {
 
-    private final Set<SpecificPrintCommandValidator<?>> specificPrintCommandValidators;
+    private final Set<SpecificPrintValidator> specificPrintValidators;
 
     @Autowired
-    public PrintCommandValidator(Set<SpecificPrintCommandValidator<?>> specificPrintCommandValidators) {
+    public PrintCommandValidator(Set<SpecificPrintValidator> specificPrintValidators) {
 
-        this.specificPrintCommandValidators = specificPrintCommandValidators;
+        this.specificPrintValidators = specificPrintValidators;
     }
 
     @Override
     public boolean validate(String... sourceCodeTokens) {
 
-        return specificPrintCommandValidators.stream().anyMatch(v -> v.validate(sourceCodeTokens));
+        return specificPrintValidators.stream().anyMatch(v -> v.validate(sourceCodeTokens));
     }
 
     @Override

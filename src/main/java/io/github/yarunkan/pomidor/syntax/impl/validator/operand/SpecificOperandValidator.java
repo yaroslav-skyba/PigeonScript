@@ -1,18 +1,17 @@
 package io.github.yarunkan.pomidor.syntax.impl.validator.operand;
 
 import io.github.yarunkan.pomidor.database.variables.VariablesDatabase;
-import io.github.yarunkan.pomidor.database.variables.VariablesDatabaseImpl;
 import io.github.yarunkan.pomidor.syntax.impl.validator.literal.SpecificLiteralValidator;
 import io.github.yarunkan.pomidor.syntax.token.TokenValidator;
 
-public abstract class SpecificOperandValidator<T> implements TokenValidator {
+public abstract class SpecificOperandValidator implements TokenValidator {
 
-    final VariablesDatabase variablesDatabase = VariablesDatabaseImpl.getInstance();
+    private final VariablesDatabase variablesDatabase;
+    private final SpecificLiteralValidator literalValidator;
 
-    private final SpecificLiteralValidator<T> literalValidator;
+    protected SpecificOperandValidator(VariablesDatabase variablesDatabase, SpecificLiteralValidator literalValidator) {
 
-    protected SpecificOperandValidator(SpecificLiteralValidator<T> literalValidator) {
-
+        this.variablesDatabase = variablesDatabase;
         this.literalValidator = literalValidator;
     }
 
@@ -24,8 +23,9 @@ public abstract class SpecificOperandValidator<T> implements TokenValidator {
             return false;
         }
 
-        final String operand = variablesDatabase.getVariable(sourceCodeTokens[0]);
+        final String operand = variablesDatabase.get(sourceCodeTokens[0]);
 
-        return operand != null && literalValidator.validate(operand) || literalValidator.validate(sourceCodeTokens);
+        return  operand != null && literalValidator.validate(operand) ||
+                literalValidator.validate(sourceCodeTokens);
     }
 }

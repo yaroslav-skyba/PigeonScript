@@ -1,30 +1,29 @@
 package io.github.yarunkan.pomidor.syntax.impl;
 
+import io.github.yarunkan.pomidor.syntax.PSTokenParser;
 import io.github.yarunkan.pomidor.syntax.Token;
 import io.github.yarunkan.pomidor.syntax.token.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TokenParserImpl implements io.github.yarunkan.pomidor.syntax.TokenParser {
+public class PSTokenParserImpl implements PSTokenParser {
 
     private final TokenType type;
-    private final TokenValidator validator;
     private final List<String> sourceCodeTokens = new ArrayList<>();
     private final Iterator<String> sourceCodeTokensIterator;
+
     private Token token;
 
-    public TokenParserImpl(String sourceCode, TokenType type) {
+    public PSTokenParserImpl(String sourceCode, TokenType type) {
 
         this.type = type;
-        this.validator = type.getSchema().getTokenValidator();
 
-        final String tokenParserRegex = "\"([^\"]*)\"|(\\S+)";
-        final Matcher tokenParserMatcher = Pattern.compile(tokenParserRegex).matcher(sourceCode);
+        final Matcher parserMatcher = Pattern.compile("\"([^\"]*)\"|(\\S+)").matcher(sourceCode);
 
-        while (tokenParserMatcher.find()) {
+        while (parserMatcher.find()) {
 
-            sourceCodeTokens.add(tokenParserMatcher.group());
+            sourceCodeTokens.add(parserMatcher.group());
         }
 
         this.sourceCodeTokensIterator = sourceCodeTokens.iterator();
@@ -32,17 +31,14 @@ public class TokenParserImpl implements io.github.yarunkan.pomidor.syntax.TokenP
 
     private Token parseNextToken() {
 
-        String[] tokensToPeek = sourceCodeTokens.toArray(new String[0]);
+        final String[] tokensToPeek = sourceCodeTokens.toArray(new String[0]);
 
-        if (!validator.validate(tokensToPeek)) {
+        if (!type.getSchema().getTokenValidator().validate(tokensToPeek)) {
 
-            // todo: add more reliable error msg
             throw new IllegalStateException("Invalid next token");
         }
 
-        final TokenParser tokenParser = type.getSchema().getTokenParser();
-
-        return tokenParser.parse(tokensToPeek);
+        return type.getSchema().getTokenParser().parse(tokensToPeek);
     }
 
     @Override
@@ -50,13 +46,11 @@ public class TokenParserImpl implements io.github.yarunkan.pomidor.syntax.TokenP
 
         if (token != null) {
 
-            // todo: add more reliable error msg
             throw new IllegalStateException("Can't peek next token, token already loaded");
         }
 
         if (!sourceCodeTokensIterator.hasNext()) {
 
-            // todo: add more reliable error msg
             throw new IllegalStateException("Can't peek next token, end of file");
         }
 
@@ -70,7 +64,6 @@ public class TokenParserImpl implements io.github.yarunkan.pomidor.syntax.TokenP
 
         if (token == null && sourceCodeTokensIterator.hasNext() && type != null) {
 
-            // todo: add more reliable error msg
             token = peekNextToken().orElseThrow(() -> new IllegalStateException("Can't parse next token"));
         }
 

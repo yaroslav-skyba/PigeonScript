@@ -9,10 +9,10 @@ import java.util.Set;
 @Component
 public class VarDeclarationInterpreter extends AbstractTokenInterpreter {
 
-    private final Set<SpecificVarDeclarationInterpreter<?>> specificVarDeclarationInterpreters;
+    private final Set<SpecificVarDeclarationInterpreter> specificVarDeclarationInterpreters;
 
     @Autowired
-    public VarDeclarationInterpreter(Set<SpecificVarDeclarationInterpreter<?>> specificVarDeclarationInterpreters) {
+    public VarDeclarationInterpreter(Set<SpecificVarDeclarationInterpreter> specificVarDeclarationInterpreters) {
 
         this.specificVarDeclarationInterpreters = specificVarDeclarationInterpreters;
     }

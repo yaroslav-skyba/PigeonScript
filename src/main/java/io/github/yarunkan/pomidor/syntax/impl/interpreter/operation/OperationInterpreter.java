@@ -9,10 +9,10 @@ import java.util.Set;
 @Component
 public class OperationInterpreter extends AbstractTokenInterpreter {
 
-    private final Set<SpecificOperationInterpreter<?>> specificOperationTokenInterpreters;
+    private final Set<SpecificOperationInterpreter> specificOperationTokenInterpreters;
 
     @Autowired
-    public OperationInterpreter(Set<SpecificOperationInterpreter<?>> specificOperationTokenInterpreters) {
+    public OperationInterpreter(Set<SpecificOperationInterpreter> specificOperationTokenInterpreters) {
 
         this.specificOperationTokenInterpreters = specificOperationTokenInterpreters;
     }

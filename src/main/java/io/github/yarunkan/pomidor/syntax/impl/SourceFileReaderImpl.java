@@ -5,17 +5,17 @@ import java.io.*;
 
 public class SourceFileReaderImpl implements SourceFileReader {
 
-    private final SourceFileNameValidator sourceFileNameValidatorImpl;
+    private final SourceFileNameValidator sourceFileNameValidator;
 
-    public SourceFileReaderImpl(SourceFileNameValidator sourceFileNameValidatorImpl) {
+    public SourceFileReaderImpl(SourceFileNameValidator sourceFileNameValidator) {
 
-        this.sourceFileNameValidatorImpl = sourceFileNameValidatorImpl;
+        this.sourceFileNameValidator = sourceFileNameValidator;
     }
 
     @Override
     public String[] read(String filePath) {
 
-        if (sourceFileNameValidatorImpl.validate(filePath)) {
+        if (sourceFileNameValidator.validate(filePath)) {
 
             final StringBuilder fileLines = new StringBuilder();
 

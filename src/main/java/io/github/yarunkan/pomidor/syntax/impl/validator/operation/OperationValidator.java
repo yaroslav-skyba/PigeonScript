@@ -8,10 +8,10 @@ import java.util.Set;
 @Component
 public class OperationValidator implements TokenValidator {
 
-    private final Set<SpecificOperationValidator<?>> specificOperationValidators;
+    private final Set<SpecificOperationValidator> specificOperationValidators;
 
     @Autowired
-    public OperationValidator(Set<SpecificOperationValidator<?>> specificOperationValidators) {
+    public OperationValidator(Set<SpecificOperationValidator> specificOperationValidators) {
 
         this.specificOperationValidators = specificOperationValidators;
     }

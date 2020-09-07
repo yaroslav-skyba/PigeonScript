@@ -17,6 +17,6 @@ public class EndConditionSchema extends KeywordSchema {
     @Override
     public String getDescription() {
 
-        return super.getDescription() + "end\n";
+        return "end\n";
     }
 }

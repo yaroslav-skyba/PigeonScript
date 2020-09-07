@@ -1,5 +1,6 @@
 package io.github.yarunkan.pomidor.syntax.impl.interpreter.expression;
 
+import io.github.yarunkan.pomidor.database.variables.VariablesDatabase;
 import io.github.yarunkan.pomidor.syntax.Token;
 import io.github.yarunkan.pomidor.syntax.token.TokenType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,9 @@ import java.util.List;
 public class IntExpressionInterpreter extends SpecificExpressionInterpreter<Long> {
 
     @Autowired
-    protected IntExpressionInterpreter(TokenType operandType, TokenType operatorType) {
+    protected IntExpressionInterpreter(TokenType operandType, TokenType operatorType, VariablesDatabase variablesDatabase) {
 
-        super(operandType, operatorType);
+        super(variablesDatabase, operandType, operatorType);
     }
 
     @Override

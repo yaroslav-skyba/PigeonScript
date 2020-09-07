@@ -3,12 +3,12 @@ package io.github.yarunkan.pomidor.syntax.impl.validator.print;
 import io.github.yarunkan.pomidor.syntax.impl.validator.expression.SpecificExpressionValidator;
 import io.github.yarunkan.pomidor.syntax.token.TokenValidator;
 
-public abstract class SpecificPrintCommandValidator<T> implements TokenValidator {
+public abstract class SpecificPrintValidator implements TokenValidator {
 
     private final TokenValidator printKeywordValidator;
-    private final SpecificExpressionValidator<T> expressionValidator;
+    private final SpecificExpressionValidator expressionValidator;
 
-    public SpecificPrintCommandValidator(TokenValidator printKeywordValidator, SpecificExpressionValidator<T> expressionValidator) {
+    public SpecificPrintValidator(TokenValidator printKeywordValidator, SpecificExpressionValidator expressionValidator) {
 
         this.printKeywordValidator = printKeywordValidator;
         this.expressionValidator = expressionValidator;

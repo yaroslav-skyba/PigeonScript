@@ -3,17 +3,17 @@ package io.github.yarunkan.pomidor.syntax.impl.validator.declaration;
 import io.github.yarunkan.pomidor.syntax.impl.validator.expression.SpecificExpressionValidator;
 import io.github.yarunkan.pomidor.syntax.token.TokenValidator;
 
-public abstract class SpecificVarDeclarationValidator<T> implements TokenValidator {
+public abstract class SpecificVarDeclarationValidator implements TokenValidator {
 
     private final TokenValidator varKeywordValidator;
     private final TokenValidator varNameValidator;
     private final TokenValidator assigmentOperatorValidator;
-    private final SpecificExpressionValidator<T> expressionValidator;
+    private final SpecificExpressionValidator expressionValidator;
 
     public SpecificVarDeclarationValidator(TokenValidator varKeywordValidator,
                                            TokenValidator varNameValidator,
                                            TokenValidator assigmentOperatorValidator,
-                                           SpecificExpressionValidator<T> expressionValidator) {
+                                           SpecificExpressionValidator expressionValidator) {
 
         this.varKeywordValidator = varKeywordValidator;
         this.varNameValidator = varNameValidator;

@@ -42,7 +42,7 @@ public class TokenImpl implements Token {
     @Override
     public String toString() {
 
-        return "PomidorTokenImpl{" +
+        return "PSTokenImpl{" +
                 "tokenType=" + type +
                 ", sourceCode='" + sourceCode + '\'' +
                 ", subTokens=" + subTokens +

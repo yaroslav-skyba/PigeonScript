@@ -5,6 +5,7 @@ import io.github.yarunkan.pomidor.syntax.impl.TokenImpl;
 import io.github.yarunkan.pomidor.syntax.token.TokenParser;
 import io.github.yarunkan.pomidor.syntax.token.TokenType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,17 +13,16 @@ import java.util.List;
 @Component
 public class LabelParser implements TokenParser {
 
-    @Autowired
-    private TokenType labelType;
-
+    private final TokenType labelType;
     private final TokenParser keywordParser;
     private final TokenParser varNameParser;
 
     @Autowired
-    public LabelParser(TokenParser keywordParser, TokenParser varNameParser) {
+    public LabelParser(TokenParser keywordParser, TokenParser varNameParser, @Lazy TokenType labelType) {
 
         this.keywordParser = keywordParser;
         this.varNameParser = varNameParser;
+        this.labelType = labelType;
     }
 
     @Override

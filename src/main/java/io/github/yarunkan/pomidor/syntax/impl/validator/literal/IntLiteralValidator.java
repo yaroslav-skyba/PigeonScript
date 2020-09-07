@@ -3,12 +3,7 @@ package io.github.yarunkan.pomidor.syntax.impl.validator.literal;
 import org.springframework.stereotype.Component;
 
 @Component
-public class IntLiteralValidator implements SpecificLiteralValidator<Long> {
-
-    @Override
-    public Class<Long> getType() {
-        return Long.class;
-    }
+public class IntLiteralValidator implements SpecificLiteralValidator {
 
     @Override
     public boolean validate(String... sourceCodeTokens) {
@@ -19,5 +14,11 @@ public class IntLiteralValidator implements SpecificLiteralValidator<Long> {
         }
 
         return sourceCodeTokens[0] != null && sourceCodeTokens[0].matches("-?\\d{1,9}");
+    }
+
+    @Override
+    public Class<Long> getType() {
+
+        return Long.class;
     }
 }

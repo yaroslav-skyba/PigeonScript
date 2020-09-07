@@ -8,10 +8,10 @@ import java.util.Set;
 @Component
 public class ExpressionValidator implements TokenValidator {
 
-    private final Set<SpecificExpressionValidator<?>> specificExpressionValidators;
+    private final Set<SpecificExpressionValidator> specificExpressionValidators;
 
     @Autowired
-    public ExpressionValidator(Set<SpecificExpressionValidator<?>> specificExpressionValidators) {
+    public ExpressionValidator(Set<SpecificExpressionValidator> specificExpressionValidators) {
 
         this.specificExpressionValidators = specificExpressionValidators;
     }

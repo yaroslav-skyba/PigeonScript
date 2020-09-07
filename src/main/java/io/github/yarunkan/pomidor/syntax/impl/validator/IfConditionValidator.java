@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 public class IfConditionValidator implements TokenValidator {
 
     private final TokenValidator ifKeywordValidator;
-    private final SpecificExpressionValidator<Boolean> boolExpressionValidator;
+    private final SpecificExpressionValidator boolExpressionValidator;
     private final TokenValidator thenKeywordValidator;
 
     @Autowired
     public IfConditionValidator(TokenValidator ifKeywordValidator,
-                                SpecificExpressionValidator<Boolean> boolExpressionValidator,
+                                SpecificExpressionValidator boolExpressionValidator,
                                 TokenValidator thenKeywordValidator) {
 
         this.ifKeywordValidator = ifKeywordValidator;

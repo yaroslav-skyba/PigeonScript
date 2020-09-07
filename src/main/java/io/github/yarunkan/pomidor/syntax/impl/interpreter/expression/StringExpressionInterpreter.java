@@ -1,5 +1,6 @@
 package io.github.yarunkan.pomidor.syntax.impl.interpreter.expression;
 
+import io.github.yarunkan.pomidor.database.variables.VariablesDatabase;
 import io.github.yarunkan.pomidor.syntax.Token;
 import io.github.yarunkan.pomidor.syntax.token.TokenType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +10,10 @@ import java.util.List;
 @Component
 public class StringExpressionInterpreter extends SpecificExpressionInterpreter<String> {
 
-    private static final String QUOTE = "\"";
-    private static final CharSequence EMPTY = "";
-
     @Autowired
-    protected StringExpressionInterpreter(TokenType operandType, TokenType operatorType) {
+    protected StringExpressionInterpreter(TokenType operandType, TokenType operatorType, VariablesDatabase variablesDatabase) {
 
-        super(operandType, operatorType);
+        super(variablesDatabase, operandType, operatorType);
     }
 
     @Override
@@ -32,6 +30,9 @@ public class StringExpressionInterpreter extends SpecificExpressionInterpreter<S
             return expressionOperands[0];
         }
 
-        return QUOTE + String.join(EMPTY, expressionOperands).replace(QUOTE, EMPTY) + QUOTE;
+        final String quote = "\"";
+        final CharSequence empty = "";
+
+        return quote + String.join(empty, expressionOperands).replace(quote, empty) + quote;
     }
 }

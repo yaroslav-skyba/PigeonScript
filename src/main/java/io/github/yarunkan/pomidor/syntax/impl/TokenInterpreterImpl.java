@@ -1,6 +1,6 @@
 package io.github.yarunkan.pomidor.syntax.impl;
 
-import io.github.yarunkan.pomidor.syntax.TokenParser;
+import io.github.yarunkan.pomidor.syntax.PSTokenParser;
 import io.github.yarunkan.pomidor.syntax.Token;
 import io.github.yarunkan.pomidor.syntax.impl.type.interpretable.InterpretableType;
 import io.github.yarunkan.pomidor.syntax.token.*;
@@ -26,12 +26,12 @@ public class TokenInterpreterImpl implements io.github.yarunkan.pomidor.syntax.T
         for (final InterpretableType interpretableType : interpretableTypes) {
 
             final TokenType tokenBean = context.getBean(interpretableType.getClass());
-            final TokenParser tokenParser = new TokenParserImpl(fileLine, tokenBean);
+            final PSTokenParser parser = new PSTokenParserImpl(fileLine, tokenBean);
             final Token token;
 
             try {
 
-                token = tokenParser.takeNextToken();
+                token = parser.takeNextToken();
 
             } catch (IllegalStateException e) {
 

@@ -1,23 +1,24 @@
 package io.github.yarunkan.pomidor.syntax.impl.interpreter.operation;
 
 import io.github.yarunkan.pomidor.database.variables.VariablesDatabase;
-import io.github.yarunkan.pomidor.database.variables.VariablesDatabaseImpl;
 import io.github.yarunkan.pomidor.syntax.Token;
-import io.github.yarunkan.pomidor.syntax.impl.TokenParserImpl;
+import io.github.yarunkan.pomidor.syntax.impl.PSTokenParserImpl;
 import io.github.yarunkan.pomidor.syntax.impl.interpreter.expression.SpecificExpressionInterpreter;
 import io.github.yarunkan.pomidor.syntax.token.AbstractTokenInterpreter;
 import io.github.yarunkan.pomidor.syntax.token.TokenType;
 import java.util.List;
 
-public abstract class SpecificOperationInterpreter<T> extends AbstractTokenInterpreter {
+public abstract class SpecificOperationInterpreter extends AbstractTokenInterpreter {
 
-    final VariablesDatabase variablesDatabase = VariablesDatabaseImpl.getInstance();
-
-    private final SpecificExpressionInterpreter<T> specificExpressionTokenInterpreter;
+    private final VariablesDatabase variablesDatabase;
+    private final SpecificExpressionInterpreter<?> specificExpressionTokenInterpreter;
     private final TokenType expressionType;
 
-    protected SpecificOperationInterpreter(SpecificExpressionInterpreter<T> specificExpressionTokenInterpreter, TokenType expressionType) {
+    protected SpecificOperationInterpreter(VariablesDatabase variablesDatabase,
+                                           SpecificExpressionInterpreter<?> specificExpressionTokenInterpreter,
+                                           TokenType expressionType) {
 
+        this.variablesDatabase = variablesDatabase;
         this.specificExpressionTokenInterpreter = specificExpressionTokenInterpreter;
         this.expressionType = expressionType;
     }
@@ -27,7 +28,7 @@ public abstract class SpecificOperationInterpreter<T> extends AbstractTokenInter
 
         final List<Token> subTokens = token.getSubTokens();
         final String assignableVarName = subTokens.get(0).getSourceCode();
-        String assignableVarValue = variablesDatabase.getVariable(assignableVarName);
+        String assignableVarValue = variablesDatabase.get(assignableVarName);
 
         if (assignableVarValue == null) {
 
@@ -43,7 +44,7 @@ public abstract class SpecificOperationInterpreter<T> extends AbstractTokenInter
         }
 
         final String expressionSourceCodeLine = String.join(" ", expressionSourceCode);
-        final Token expressionToken = new TokenParserImpl(expressionSourceCodeLine, expressionType).takeNextToken();
+        final Token expressionToken = new PSTokenParserImpl(expressionSourceCodeLine, expressionType).takeNextToken();
 
         if (!specificExpressionTokenInterpreter.interpret(expressionToken)) {
 
@@ -59,7 +60,7 @@ public abstract class SpecificOperationInterpreter<T> extends AbstractTokenInter
             return false;
         }
 
-        variablesDatabase.setVariable(assignableVarName, assignableVarValue);
+        variablesDatabase.add(assignableVarName, assignableVarValue);
 
         return true;
     }

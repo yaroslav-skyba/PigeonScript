@@ -8,10 +8,10 @@ import java.util.Set;
 @Component
 public class VarDeclarationValidator implements TokenValidator {
 
-    private final Set<SpecificVarDeclarationValidator<?>> specificVarDeclarationValidators;
+    private final Set<SpecificVarDeclarationValidator> specificVarDeclarationValidators;
 
     @Autowired
-    public VarDeclarationValidator(Set<SpecificVarDeclarationValidator<?>> specificVarDeclarationValidators) {
+    public VarDeclarationValidator(Set<SpecificVarDeclarationValidator> specificVarDeclarationValidators) {
 
         this.specificVarDeclarationValidators = specificVarDeclarationValidators;
     }

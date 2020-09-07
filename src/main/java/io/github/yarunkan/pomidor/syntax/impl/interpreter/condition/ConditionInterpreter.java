@@ -13,8 +13,7 @@ public abstract class ConditionInterpreter extends AbstractTokenInterpreter impl
 
         final Boolean isConditionTrue = getIsConditionTrue();
 
-        return  isConditionTrue == null ||
-                isConditionTrue;
+        return isConditionTrue == null || isConditionTrue;
     }
 
     @Override

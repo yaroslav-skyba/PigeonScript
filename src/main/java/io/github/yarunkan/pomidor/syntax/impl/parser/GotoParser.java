@@ -13,7 +13,6 @@ import java.util.List;
 @Component
 public class GotoParser implements TokenParser {
 
-
     private final TokenType gotoType;
     private final TokenParser keywordParser;
     private final TokenParser varNameParser;

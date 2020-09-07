@@ -2,17 +2,24 @@ package io.github.yarunkan.pomidor.syntax.impl.type;
 
 import io.github.yarunkan.pomidor.syntax.token.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OperandType implements TokenType {
 
+    private final TokenSchema operandSchema;
+
+    @Lazy
     @Autowired
-    private TokenSchema operandSchema;
+    public OperandType(TokenSchema operandSchema) {
+
+        this.operandSchema = operandSchema;
+    }
 
     @Override
     public String getName() {
-        return "Print command argument token";
+        return "A operand token";
     }
 
     @Override

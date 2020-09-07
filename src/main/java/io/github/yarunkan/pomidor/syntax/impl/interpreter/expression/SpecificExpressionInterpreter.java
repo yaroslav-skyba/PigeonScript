@@ -1,7 +1,6 @@
 package io.github.yarunkan.pomidor.syntax.impl.interpreter.expression;
 
 import io.github.yarunkan.pomidor.database.variables.VariablesDatabase;
-import io.github.yarunkan.pomidor.database.variables.VariablesDatabaseImpl;
 import io.github.yarunkan.pomidor.syntax.Token;
 import io.github.yarunkan.pomidor.syntax.token.AbstractTokenInterpreter;
 import io.github.yarunkan.pomidor.syntax.token.TokenType;
@@ -11,15 +10,16 @@ import java.util.Objects;
 
 public abstract class SpecificExpressionInterpreter<T> extends AbstractTokenInterpreter {
 
-    final VariablesDatabase variablesDatabase = VariablesDatabaseImpl.getInstance();
-
+    private final VariablesDatabase variablesDatabase;
     private final TokenType operandType;
     private final TokenType operatorType;
+
     private T expressionResult;
 
     @Autowired
-    protected SpecificExpressionInterpreter(TokenType operandType, TokenType operatorType) {
+    protected SpecificExpressionInterpreter(VariablesDatabase variablesDatabase, TokenType operandType, TokenType operatorType) {
 
+        this.variablesDatabase = variablesDatabase;
         this.operandType = operandType;
         this.operatorType = operatorType;
     }
@@ -53,23 +53,22 @@ public abstract class SpecificExpressionInterpreter<T> extends AbstractTokenInte
 
     String[] getSourceCodeOperands(List<Token> expressionTokens) {
 
-        int expressionOperandsLength = 0;
+        int operandsCount = 0;
 
         for (Token expressionToken : expressionTokens) {
 
             if (expressionToken.getType().getClass() == operandType.getClass()) {
 
-                expressionOperandsLength++;
+                operandsCount++;
             }
         }
 
-        final String[] sourceCodeOperands = new String[expressionOperandsLength];
+        final String[] sourceCodeOperands = new String[operandsCount];
 
-        for (int i = 0; i < expressionOperandsLength; i++) {
+        for (int i = 0; i < operandsCount; i++) {
 
             sourceCodeOperands[i] = expressionTokens.get(i * 2).getSourceCode();
-            sourceCodeOperands[i] = Objects.requireNonNullElse(variablesDatabase.getVariable(sourceCodeOperands[i]),
-                                                               sourceCodeOperands[i]);
+            sourceCodeOperands[i] = Objects.requireNonNullElse(variablesDatabase.get(sourceCodeOperands[i]), sourceCodeOperands[i]);
         }
 
         return sourceCodeOperands;

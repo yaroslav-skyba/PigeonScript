@@ -2,6 +2,7 @@ package io.github.yarunkan.pomidor.syntax.impl.interpreter.condition;
 
 import io.github.yarunkan.pomidor.syntax.Token;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -9,8 +10,13 @@ public class ElseConditionInterpreter extends ConditionInterpreter {
 
     private Boolean isElseConditionTrue = null;
 
+    private final ConditionInterpreter ifConditionInterpreter;
+
     @Autowired
-    private ConditionInterpreter ifConditionInterpreter;
+    public ElseConditionInterpreter(@Lazy ConditionInterpreter ifConditionInterpreter) {
+
+        this.ifConditionInterpreter = ifConditionInterpreter;
+    }
 
     @Override
     public boolean interpret(Token token) {

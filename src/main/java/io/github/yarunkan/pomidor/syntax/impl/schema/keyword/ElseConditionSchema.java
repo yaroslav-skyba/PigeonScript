@@ -17,6 +17,6 @@ public class ElseConditionSchema extends KeywordSchema {
     @Override
     public String getDescription() {
 
-        return super.getDescription() + "else\n";
+        return "else\n";
     }
 }

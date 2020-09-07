@@ -4,15 +4,15 @@ import io.github.yarunkan.pomidor.syntax.impl.validator.expression.SpecificExpre
 import io.github.yarunkan.pomidor.syntax.impl.validator.operand.SpecificOperandValidator;
 import io.github.yarunkan.pomidor.syntax.token.TokenValidator;
 
-public abstract class SpecificOperationValidator<T> implements TokenValidator {
+public abstract class SpecificOperationValidator implements TokenValidator {
 
-    private final SpecificOperandValidator<T> operandValidator;
+    private final SpecificOperandValidator operandValidator;
     private final TokenValidator assigmentOperatorValidator;
-    private final SpecificExpressionValidator<T> expressionValidator;
+    private final SpecificExpressionValidator expressionValidator;
 
-    public SpecificOperationValidator(SpecificOperandValidator<T> operandValidator,
+    public SpecificOperationValidator(SpecificOperandValidator operandValidator,
                                       TokenValidator assigmentOperatorValidator,
-                                      SpecificExpressionValidator<T> expressionValidator) {
+                                      SpecificExpressionValidator expressionValidator) {
 
         this.operandValidator = operandValidator;
         this.assigmentOperatorValidator = assigmentOperatorValidator;

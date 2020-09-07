@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class IntOperationValidator extends SpecificOperationValidator<Long> {
+public class IntOperationValidator extends SpecificOperationValidator {
 
     @Autowired
-    public IntOperationValidator(SpecificOperandValidator<Long> intOperandValidator,
+    public IntOperationValidator(SpecificOperandValidator intOperandValidator,
                                  TokenValidator assigmentOperatorValidator,
-                                 SpecificExpressionValidator<Long> intExpressionValidator) {
+                                 SpecificExpressionValidator intExpressionValidator) {
 
         super(intOperandValidator, assigmentOperatorValidator, intExpressionValidator);
     }

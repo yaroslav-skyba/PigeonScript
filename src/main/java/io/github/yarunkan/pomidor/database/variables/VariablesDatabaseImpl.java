@@ -1,34 +1,22 @@
 package io.github.yarunkan.pomidor.database.variables;
 
+import org.springframework.stereotype.Component;
 import java.util.*;
 
+@Component
 public class VariablesDatabaseImpl implements VariablesDatabase {
 
-    private static VariablesDatabaseImpl variablesDatabase;
+    private final static Map<String, String> VARIABLES = new HashMap<>();
 
-    private final Map<String, String> variables = new HashMap<>();
+    @Override
+    public String get(String variableName) {
 
-    private VariablesDatabaseImpl(){}
-
-    public static VariablesDatabaseImpl getInstance() {
-
-        if (variablesDatabase == null) {
-
-            variablesDatabase = new VariablesDatabaseImpl();
-        }
-
-        return variablesDatabase;
+        return VARIABLES.get(variableName);
     }
 
     @Override
-    public String getVariable(String variableName) {
+    public void add(String variableName, String variableValue) {
 
-        return variables.get(variableName);
-    }
-
-    @Override
-    public void setVariable(String variableName, String variableValue) {
-
-        variables.put(variableName, variableValue);
+        VARIABLES.put(variableName, variableValue);
     }
 }

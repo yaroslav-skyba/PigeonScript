@@ -3,7 +3,7 @@ package io.github.yarunkan.pomidor.syntax.impl.validator.literal;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BoolLiteralValidator implements SpecificLiteralValidator<Boolean> {
+public class BoolLiteralValidator implements SpecificLiteralValidator {
 
     @Override
     public Class<Boolean> getType() {

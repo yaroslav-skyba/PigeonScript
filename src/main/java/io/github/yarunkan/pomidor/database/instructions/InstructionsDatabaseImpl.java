@@ -14,13 +14,13 @@ public class InstructionsDatabaseImpl implements InstructionsDatabase {
     @Override
     public void add(String instruction) {
 
-        final Matcher tokenParserMatcher = Pattern.compile("\"([^\"]*)\"|(\\S+)").matcher(instruction);
+        final Matcher tokenMatcher = Pattern.compile("\"([^\"]*)\"|(\\S+)").matcher(instruction);
 
         final List<String> instructionTokens = new ArrayList<>();
 
-        while (tokenParserMatcher.find()) {
+        while (tokenMatcher.find()) {
 
-            instructionTokens.add(tokenParserMatcher.group());
+            instructionTokens.add(tokenMatcher.group());
         }
 
         INSTRUCTIONS.add(String.join(" ", instructionTokens));

@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BoolPrintCommandValidator extends SpecificPrintCommandValidator<Boolean> {
+public class IntPrintValidator extends SpecificPrintValidator {
 
     @Autowired
-    public BoolPrintCommandValidator(TokenValidator printKeywordValidator, SpecificExpressionValidator<Boolean> boolExpressionValidator) {
+    public IntPrintValidator(TokenValidator printKeywordValidator, SpecificExpressionValidator intExpressionValidator) {
 
-        super(printKeywordValidator, boolExpressionValidator);
+        super(printKeywordValidator, intExpressionValidator);
     }
 }

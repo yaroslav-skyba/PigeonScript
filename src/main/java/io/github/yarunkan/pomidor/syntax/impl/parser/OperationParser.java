@@ -5,6 +5,7 @@ import io.github.yarunkan.pomidor.syntax.impl.TokenImpl;
 import io.github.yarunkan.pomidor.syntax.token.TokenParser;
 import io.github.yarunkan.pomidor.syntax.token.TokenType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +13,7 @@ import java.util.List;
 @Component
 public class OperationParser implements TokenParser {
 
-    @Autowired
-    private TokenType operationType;
-
+    private final TokenType operationType;
     private final TokenParser operandParser;
     private final TokenParser operatorParser;
     private final TokenParser expressionParser;
@@ -22,20 +21,22 @@ public class OperationParser implements TokenParser {
     @Autowired
     public OperationParser(TokenParser operandParser,
                            TokenParser operatorParser,
-                           TokenParser expressionParser) {
+                           TokenParser expressionParser,
+                           @Lazy TokenType operationType) {
 
         this.operandParser = operandParser;
         this.operatorParser = operatorParser;
         this.expressionParser = expressionParser;
+        this.operationType = operationType;
     }
 
     @Override
     public Token parse(String... sourceCodeTokens) {
 
-        final List<Token> tokensList = new ArrayList<>();
+        final List<Token> tokenList = new ArrayList<>();
 
-        tokensList.add(operandParser.parse(sourceCodeTokens[0]));
-        tokensList.add(operatorParser.parse(sourceCodeTokens[1]));
+        tokenList.add(operandParser.parse(sourceCodeTokens[0]));
+        tokenList.add(operatorParser.parse(sourceCodeTokens[1]));
 
         final int notExpressionTokensCount = 2;
         final int expressionTokensCount = sourceCodeTokens.length - notExpressionTokensCount;
@@ -43,8 +44,8 @@ public class OperationParser implements TokenParser {
 
         System.arraycopy(sourceCodeTokens, notExpressionTokensCount, expressionTokens, 0, expressionTokensCount);
 
-        tokensList.addAll(expressionParser.parse(expressionTokens).getSubTokens());
+        tokenList.addAll(expressionParser.parse(expressionTokens).getSubTokens());
 
-        return new TokenImpl(operationType, String.join(" ", sourceCodeTokens), tokensList);
+        return new TokenImpl(operationType, String.join(" ", sourceCodeTokens), tokenList);
     }
 }

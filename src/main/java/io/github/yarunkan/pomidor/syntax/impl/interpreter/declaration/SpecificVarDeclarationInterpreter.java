@@ -1,22 +1,21 @@
 package io.github.yarunkan.pomidor.syntax.impl.interpreter.declaration;
 
 import io.github.yarunkan.pomidor.database.variables.VariablesDatabase;
-import io.github.yarunkan.pomidor.database.variables.VariablesDatabaseImpl;
 import io.github.yarunkan.pomidor.syntax.Token;
 import io.github.yarunkan.pomidor.syntax.impl.TokenImpl;
 import io.github.yarunkan.pomidor.syntax.impl.interpreter.expression.SpecificExpressionInterpreter;
 import io.github.yarunkan.pomidor.syntax.token.AbstractTokenInterpreter;
 import java.util.List;
 
-public abstract class SpecificVarDeclarationInterpreter<T> extends AbstractTokenInterpreter {
+public abstract class SpecificVarDeclarationInterpreter extends AbstractTokenInterpreter {
 
-    final VariablesDatabase variablesDatabase = VariablesDatabaseImpl.getInstance();
+    private final VariablesDatabase variablesDatabase;
+    private final SpecificExpressionInterpreter<?> expressionInterpreter;
 
-    private final SpecificExpressionInterpreter<T> specificExpressionInterpreter;
+    public SpecificVarDeclarationInterpreter(VariablesDatabase variablesDatabase, SpecificExpressionInterpreter<?> expressionInterpreter) {
 
-    public SpecificVarDeclarationInterpreter(SpecificExpressionInterpreter<T> specificExpressionInterpreter) {
-
-        this.specificExpressionInterpreter = specificExpressionInterpreter;
+        this.variablesDatabase = variablesDatabase;
+        this.expressionInterpreter = expressionInterpreter;
     }
 
     @Override
@@ -25,7 +24,7 @@ public abstract class SpecificVarDeclarationInterpreter<T> extends AbstractToken
         final List<Token> subTokens = token.getSubTokens();
         final String assignableVarName = subTokens.get(1).getSourceCode();
 
-        String assignableVarValue = variablesDatabase.getVariable(assignableVarName);
+        String assignableVarValue = variablesDatabase.get(assignableVarName);
 
         if (assignableVarValue != null) {
 
@@ -33,30 +32,30 @@ public abstract class SpecificVarDeclarationInterpreter<T> extends AbstractToken
         }
 
         final List<Token> expressionTokens = subTokens.subList(3, subTokens.size());
-        final String[] expressionSourceCodeLines = new String[expressionTokens.size()];
+        final String[] expressionSourceCodeTokens = new String[expressionTokens.size()];
 
-        for (int i = 0; i < expressionSourceCodeLines.length; i++) {
+        for (int i = 0; i < expressionSourceCodeTokens.length; i++) {
 
-            expressionSourceCodeLines[i] = expressionTokens.get(i).getSourceCode();
+            expressionSourceCodeTokens[i] = expressionTokens.get(i).getSourceCode();
         }
 
-        final Token expressionToken = new TokenImpl(token.getType(), String.join(" ", expressionSourceCodeLines), expressionTokens);
+        final Token expressionToken = new TokenImpl(token.getType(), String.join(" ", expressionSourceCodeTokens), expressionTokens);
 
-        if (!specificExpressionInterpreter.interpret(expressionToken)) {
+        if (!expressionInterpreter.interpret(expressionToken)) {
 
             return false;
         }
 
         try {
 
-            assignableVarValue = specificExpressionInterpreter.getExpressionResult(expressionToken).toString();
+            assignableVarValue = expressionInterpreter.getExpressionResult(expressionToken).toString();
 
         } catch (Exception e) {
 
             return false;
         }
 
-        variablesDatabase.setVariable(assignableVarName, assignableVarValue);
+        variablesDatabase.add(assignableVarName, assignableVarValue);
 
         return true;
     }
