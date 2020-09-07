@@ -19,7 +19,7 @@ public class PSTokenParserImpl implements PSTokenParser {
 
         this.type = type;
 
-        final Matcher parserMatcher = Pattern.compile("\"([^\"]*)\"|(\\S+)").matcher(sourceCode);
+        final Matcher parserMatcher = Pattern.compile("\"([^\"]*)\"|(\\S+)|^$").matcher(sourceCode.trim());
 
         while (parserMatcher.find()) {
 

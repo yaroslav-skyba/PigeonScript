@@ -1,7 +1,7 @@
 package io.github.yarunkan.pomidor.syntax.token;
 
 import io.github.yarunkan.pomidor.syntax.Token;
-import io.github.yarunkan.pomidor.syntax.impl.interpreter.InterpretationBlocker;
+import io.github.yarunkan.pomidor.syntax.impl.interpreter.condition.InterpretationBlocker;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Set;
 
