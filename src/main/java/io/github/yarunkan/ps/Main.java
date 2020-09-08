@@ -43,7 +43,7 @@ public class Main {
 
             if (!interpreter.interpret(fileLines[i], context)) {
 
-                System.out.println(redConsoleTextColor + "Line: " + (i+1) + ". An incorrect instruction: " + fileLines[i]);
+                System.out.println(redConsoleTextColor + "Line: " + (i + 1) + ". An incorrect instruction: " + fileLines[i]);
                 System.exit(0);
             }
         }
