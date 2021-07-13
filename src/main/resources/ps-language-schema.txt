@@ -1,5 +1,5 @@
-0) <pomidor-program> --> <pomidor-statement> <pomidor-program> | <empty>
-1) <pomidor-statement> --> <print> | <var-declaration> | <expression> | <label-declaration> | <goto> | <if-else-block>
+0) <ps-program> --> <ps-statement> <ps-program> | <empty>
+1) <ps-statement> --> <print> | <var-declaration> | <expression> | <label-declaration> | <goto> | <if-else-block>
 
 2) <literal> --> <bool-literal> | <int-literal> | <string-literal>
 
@@ -32,7 +32,7 @@
 21) <bool-operator> --> '&' | '|'
 22) <string-operator> --> '+'
 
-23) <if-else-block> --> if <expression> then <pomidor-statement> end | if <expression> then <pomidor-statement> else <pomidor-statement> end
+23) <if-else-block> --> if <expression> then <ps-statement> end | if <expression> then <ps-statement> else <ps-statement> end
 
 24) <print> --> print <expression>
 
